@@ -102,7 +102,6 @@ def autoNorm(dataSet):
     """
     # 取得数据集中每列的最小值
     min_vals = dataSet.min(axis=0)
-
     # 取得数据集中每列的最大值
     max_vals = dataSet.max(axis=0)
 
@@ -110,7 +109,7 @@ def autoNorm(dataSet):
     ranges = max_vals - min_vals
 
     # 归一化后的数据集，先生成一个与原数据集相同大小的 0 数据集
-    norm_data_set = np.zeros(dataSet.shape)
+    norm_data_set = np.zeros(np.shape(dataSet))
 
     # 原数据的个数，即行数
     m = dataSet.shape[0]
@@ -126,17 +125,51 @@ def autoNorm(dataSet):
 
 
 def datingClassTest():
+    """
+    测试代码
+    :return: 
+    """
+    # 用 10% 的数据做是测试样本
     ho_ratio = 0.10
+
+    # 获得数据集及标签
     dating_data_mat, dating_labels = file2matrix('data/datingTestSet2.txt')
-    norma_mat, ranges, min_vlas = autoNorm(dating_data_mat)
-    m = norma_mat.shape[0]
+
+    # 归一化处理，拿到归一化后的数据集，数据变化范围和特征值的最小值向量
+    norm_mat, ranges, min_vals = autoNorm(dating_data_mat)
+
+    # 获得归一化后的数据集的行数
+    m = norm_mat.shape[0]
+
+    # 对总个数的 10% 进行测试
     num_test_vecs = int(m * ho_ratio)
+
+    # 错误个数
     error_count = 0.0
     for i in range(num_test_vecs):
-        classifier_result = classify0(norma_mat[i, :], norma_mat[num_test_vecs, :],
+
+        # 获得识别结果
+        classifier_result = classify0(norm_mat[i, :], norm_mat[num_test_vecs:m, :],
                                       dating_labels[num_test_vecs:m], 3)
         print('the classifier came back with: %d, the real answer is: %d'
               % (classifier_result, dating_labels[i]))
+
+        # 识别结果与真实值对比
         if classifier_result != dating_labels[i]:
             error_count += 1.0
+
+    # 打印输出错误率
     print('the total error rate is: %f' % (error_count / float(num_test_vecs)))
+
+
+def classifyPerson():
+    result_list = ['not at all', 'in small does', 'in large does']
+    percent_time_ats = float(input('percentage of time spent playing video games?'))
+    ff_miles = float(input('frequent flier miles miles earned per year?'))
+    ice_cream = float(input('liters of ice cream consumed per year?'))
+    # 获得数据集及标签
+    dating_data_mat, dating_labels = file2matrix('data/datingTestSet2.txt')
+    norm_mat, ranges, min_vals = autoNorm(dating_data_mat)
+    in_arr = np.array([ff_miles, percent_time_ats, ice_cream])
+    classifier_result = classify0((in_arr - min_vals) / ranges, norm_mat, dating_labels, 3)
+    print('You will probably like this person: ', result_list[classifier_result - 1])

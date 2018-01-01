@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from knn import kNN
 
-dating_data_mat, dating_labels = kNN.file2matrix('data/datingTestSet2.txt')
+# dating_data_mat, dating_labels = kNN.file2matrix('data/datingTestSet2.txt')
 
 # # print(dating_data_mat)
 # # print(dating_labels[0:20])
@@ -28,10 +28,12 @@ dating_data_mat, dating_labels = kNN.file2matrix('data/datingTestSet2.txt')
 # plt.show()
 
 
-norm_mat, ranges, min_vals = kNN.autoNorm(dating_data_mat)
-print(norm_mat)
-print(ranges)
-print(min_vals)
+# norm_mat, ranges, min_vals = kNN.autoNorm(dating_data_mat)
+# print(norm_mat)
+# print(ranges)
+# print(min_vals)
 
 
-kNN.datingClassTest()
+# kNN.datingClassTest()
+
+kNN.classifyPerson()
