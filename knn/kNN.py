@@ -1,11 +1,21 @@
 import numpy as np
 import operator
+from os import listdir
+
+"""
+simple data set
+"""
 
 
 def createDataSet():
     group = np.array([[1.0, 1.1], [1.0, 1.0], [0.0, 0.0], [0, 0.1]])
     labels = ['A', 'A', 'B', 'B']
     return group, labels
+
+
+"""
+dating match
+"""
 
 
 def classify0(inX, dataSet, labels, k):
@@ -173,3 +183,86 @@ def classifyPerson():
     in_arr = np.array([ff_miles, percent_time_ats, ice_cream])
     classifier_result = classify0((in_arr - min_vals) / ranges, norm_mat, dating_labels, 3)
     print('You will probably like this person: ', result_list[classifier_result - 1])
+
+
+"""
+handwriting recognition
+"""
+
+
+def img2vector(filename):
+    """
+    将图像文本转化为向量
+    图像文本为 32 * 32，转化为向量长度为 1024
+    :param filename: 图像文本文件名
+    :return: 图像文本的向量
+    """
+    return_vect = np.zeros((1, 1024))
+    with open(filename) as fr:
+        for i in range(32):
+            line_string = fr.readline()
+            for j in range(32):
+                return_vect[0, 32 * i + j] = int(line_string[j])
+    return return_vect
+
+
+def handwritingClassTest():
+    """
+    测试手写字识别
+    [注] 这里的手写字指的是图片文本，数字从 0 到 9
+    :return: 
+    """
+    # 手写字类别
+    hw_labels = []
+
+    # 训练样本目录
+    training_file_list = listdir('data/trainingDigits')
+
+    # 训练样本个数
+    m = len(training_file_list)
+
+    # 训练样本向量
+    training_mat = np.zeros((m, 1024))
+
+    # 对每个训练样本进行处理
+    for i in range(m):
+        # 训练样本文件名
+        file_name_str = training_file_list[i]
+
+        # 分割文件名， '_' 前的字符为类别
+        file_str = file_name_str.split('_')[0]
+        class_number_str = int(file_str.split('_')[0])
+
+        # 添加训练样本的类别
+        hw_labels.append(class_number_str)
+
+        # 将训练样本转化为向量
+        training_mat[i, :] = img2vector('data/trainingDigits/%s' % file_name_str)
+
+    # 测试样本
+    test_file_list = listdir('data/testDigits')
+
+    # 错误率
+    error_count = 0.0
+    # 测试样本个数
+    test = len(test_file_list)
+
+    # 对每个测试样本处理
+    for i in range(test):
+        # 测试样本文件名
+        file_name_str = test_file_list[i]
+        file_str = file_name_str.split('_')[0]
+        class_number_str = int(file_name_str.split('_')[0])
+
+        # 将测试样本转化为向量
+        vector_under_test = img2vector('data/testDigits/%s' % file_name_str)
+
+        # 识别结果
+        classifier_result = classify0(vector_under_test, training_mat, hw_labels, 3)
+        print('the classifier came back with: %d, the real answer is: %d' % (classifier_result, class_number_str))
+
+        # 识别结果与真值对比
+        if classifier_result != class_number_str:
+            error_count += 1.0
+    print('\nthe total number of errors is : %d' % error_count)
+    print('\nthe total error rate is: %f' % (error_count / float(test)))

@@ -36,4 +36,12 @@ from knn import kNN
 
 # kNN.datingClassTest()
 
-kNN.classifyPerson()
+# kNN.classifyPerson()
+
+
+# test_vector = kNN.img2vector('data/testDigits/0_0.txt')
+
+# for i in range(32):
+#     print(test_vector[0, 0 + i * 32:31 + i * 32])
+
+kNN.handwritingClassTest()
