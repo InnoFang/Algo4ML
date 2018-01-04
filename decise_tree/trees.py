@@ -1,4 +1,5 @@
 from math import log
+import operator
 
 
 def createDataSet():
@@ -18,6 +19,9 @@ def createDataSet():
 def calcShannonEnt(dataSet):
     """
     计算信息熵
+    --------------------------------------
+    公式：Entropy(s) = ∑-P(x)log_2(P(x))
+    --------------------------------------
     :param dataSet: 输入数据集
     :return: 当前数据集的信息熵
     """
@@ -76,3 +80,143 @@ def splitDataSet(dataSet, axis, value):
             # 将符合要求的列表添加到返回数据集中。[注]使用 append 会把整个列表当作元素添加进目的列表
             ret_data_set.append(reduced_feat_vec)
     return ret_data_set
+
+
+def chooseBestFeatureToSplit(dataSet):
+    """
+    对每个特征计算条件熵，并比较出那个特征的信息增益最大，选出最佳的特征进行决策树划分
+    :param dataSet: 数据集
+    :return: 具有最大信息增益的特征
+    """
+    # 获得除目标变量外的特征数量
+    num_features = len(dataSet[0]) - 1
+
+    # 获得整个数据集的信息熵
+    base_entropy = calcShannonEnt(dataSet)
+
+    # 最大信息增益
+    best_info_gain = 0.0
+
+    # 进行划分的最佳特征
+    best_feature = -1
+
+    # 对每个特征计算信息增益并取得最大值
+    for i in range(num_features):
+        # 取得数据集下的当前特征的所有值
+        feat_list = [example[i] for example in dataSet]
+        # 去除重复元素，取得对当前特征而言的所有类别
+        unique_vals = set(feat_list)
+        new_entropy = 0.0
+        # 计算每种划分方式的信息熵
+        for value in unique_vals:
+            # 获得对当前特征而言，值为 value 的数据子集
+            sub_data_set = splitDataSet(dataSet, i, value)
+
+            # 获得符合要求的数据子集占中数据集个数的比重
+            prob = len(sub_data_set) / float(len(dataSet))
+
+            # 计算在特征属性 i 的条件下样本的条件熵：∑(当前特征值的比重 * 当前特征值的信息熵)
+            new_entropy += prob * calcShannonEnt(sub_data_set)
+
+        # 特征属性 i 的信息增益 = 信息熵 - 特征属性 i 的条件熵
+        info_gain = base_entropy - new_entropy
+
+        # 判断是否为最佳信息增益，若是，则更新最大信息增益和最佳特征
+        if info_gain > best_info_gain:
+            best_info_gain = info_gain
+            best_feature = i
+    return best_feature
+
+
+def majorityCnt(classList):
+    """
+    获得出现频次最高的分类名称
+    :param classList: 分类名称列表
+    :return: 出现频次最高的分类名称
+    """
+    class_count = {}
+    for vote in classList:
+        if vote not in class_count.keys():
+            class_count[vote] = 0
+        class_count[vote] += 1
+    # 按出现次数对类别进行排序
+    sorted_class_count = sorted(class_count.items(), key=operator.itemgetter(1), reverse=True)
+    # 出现频次最高的分类名称，sorted_class_count 是一个列表，列表内包含若干个元组，元组组成为(类别,数量)
+    return sorted_class_count[0][0]
+
+
+def createTree(dataSet, labels):
+    """
+    递归构建决策树
+    -----------------
+    终止条件一：数据(子)集的类别是一样的时候，直接返回该类别
+    终止条件二：如果特征都分完了，那么返回现在类别列表中出现次数最多的类别
+    -----------------
+    构建子树时，每个特征为一个结点，每个特征值为一个子树
+    
+    :param dataSet: 数据集或者经过划分的数据子集
+    :param labels: 类别向量
+    :return: 构建好的决策树
+    """
+    # 获得所有类别
+    class_list = [example[-1] for example in dataSet]
+
+    # 递归终止条件一
+    # 类别完全相同则停止划分
+    if class_list.count(class_list[0]) == len(class_list):
+        return class_list[0]
+
+    # 递归终止条件二
+    # 遍历完所有特征值时返回出现次数最多的
+    if len(dataSet[0]) == 1:
+        return majorityCnt(class_list)
+
+    # 取得最佳特征
+    best_feat = chooseBestFeatureToSplit(dataSet)
+
+    # 取得最佳特征的类别
+    best_feat_label = labels[best_feat]
+
+    # 构建树
+    my_tree = {best_feat_label: {}}
+
+    # 删除最佳特征
+    del (labels[best_feat])
+
+    # 获得所有特征值
+    feat_values = [example[best_feat] for example in dataSet]
+
+    # 特征值去重
+    unique_vals = set(feat_values)
+    for value in unique_vals:
+        # 这是去掉当前最佳特征值后的类别向量
+        sub_labels = labels[:]
+        # 继续构建子树，每一个特征值为一棵子树
+        # 这里开始递归，传入不同特征值划分后的数据子集(即best_feat = value的情况)和类别向量
+        my_tree[best_feat_label][value] = createTree(splitDataSet(dataSet, best_feat, value), sub_labels)
+    return my_tree
+
+
+def classify(inputTree, featLabels, testVec):
+    first_str = list(inputTree)[0]
+    second_dict = inputTree[first_str]
+    feat_index = featLabels.index(first_str)
+    for key in second_dict.keys():
+        if testVec[feat_index] == key:
+            if type(second_dict[key]).__name__ == 'dict':
+                class_label = classify(second_dict[key], featLabels, testVec)
+            else:
+                class_label = second_dict[key]
+    return class_label
+
+
+def storeTree(inputTree, filename):
+    import pickle
+    with open(filename, 'wb') as fw:
+        pickle.dump(inputTree, fw)
+
+
+def grabTree(filename):
+    import pickle
+    with open(filename, 'rb') as fr:
+        return pickle.load(fr)

@@ -1,7 +1,7 @@
 # Algorithm for machine learning
 
  + [x] knn
- + [ ] decision tree
+ + [x] decision tree
  + [ ] naive bayes
  + [ ] logisitic regression
  + [ ] svm
