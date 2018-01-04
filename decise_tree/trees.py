@@ -198,11 +198,30 @@ def createTree(dataSet, labels):
 
 
 def classify(inputTree, featLabels, testVec):
+    """
+    分类
+    :param inputTree: 构建好的决策树
+    :param featLabels: 特征类别
+    :param testVec: 测试向量
+    :return: 类别
+    """
+    # 获得决策(子)树根节点，因为是字典存储，所以拿到第一个元素即可
     first_str = list(inputTree)[0]
+
+    # 拿到决策(子)树的子树，即决策树的第二层
     second_dict = inputTree[first_str]
+
+    # 取得特征类别的下标，即该下标下的所有值都是该特征的特征值
     feat_index = featLabels.index(first_str)
+
+    # 开始对子树进行操作
     for key in second_dict.keys():
+        # key 是该特征下的所有特征值，当匹配到与一个特征对应的情况下，将继续往下操作
+        # 如果没有对应上，说明构建决策树时数据量不够，树构建的不完整
         if testVec[feat_index] == key:
+            # 找到一个分支过后，判断子树的结点是什么类型
+            # 如果为字典类型，则说明还可以继续判断(判断模块)，则继续递归
+            # 否则说明判断终止(终止模块)，直接输出终止模块的类型即可
             if type(second_dict[key]).__name__ == 'dict':
                 class_label = classify(second_dict[key], featLabels, testVec)
             else:
@@ -211,12 +230,23 @@ def classify(inputTree, featLabels, testVec):
 
 
 def storeTree(inputTree, filename):
+    """
+    将构建好的二叉树存起来，防止每次分类都构建
+    :param inputTree: 要存储的决策树
+    :param filename: 存储决策树的文件名
+    :return: 
+    """
     import pickle
     with open(filename, 'wb') as fw:
         pickle.dump(inputTree, fw)
 
 
 def grabTree(filename):
+    """
+    获取在磁盘中存好的决策树
+    :param filename: 存储决策树的文件名
+    :return: 存储的决策树
+    """
     import pickle
     with open(filename, 'rb') as fr:
         return pickle.load(fr)

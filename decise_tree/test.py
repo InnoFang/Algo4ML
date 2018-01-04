@@ -61,6 +61,7 @@ my_tree = treePlotter.retrieveTree(0)
 fr = open('data/lenses.txt')
 lenses = [inst.strip().split('\t') for inst in fr.readlines()]
 lenses_labels = ['age', 'prescript', 'astigmatic', 'tearRate']
-lenses_tree = trees.createTree(lenses, lenses_labels)
+lenses_tree = trees.createTree(lenses, lenses_labels.copy())
 print(lenses_tree)
+print(trees.classify(lenses_tree, lenses_labels, ['young', 'hyper', 'no', 'reduced']))
 treePlotter.createPlot(lenses_tree)
