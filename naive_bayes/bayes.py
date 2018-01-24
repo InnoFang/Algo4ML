@@ -138,3 +138,85 @@ def testingNB():
     test_entry = ['stupid', 'garbage']
     this_doc = array(setOfWords2Vec(my_vocab_list, test_entry))
     print(test_entry, 'classified as: ', classifyNB(this_doc, p0_v, p1_v, p_ab))
+
+
+def textParse(bigString):
+    """
+    切分文本，使用正则表达式，将文本中的字母和数字分隔出来
+    并且为了保证所有词的形式是统一的，所以需要将所有字母都转化为小写
+    因为有可能分割出空字符串，还有诸如 en, py 这样的单词，我们想要去掉这些词，所以我们需要过滤掉长度小于3的字符串
+    :param bigString: 要切分的文本 
+    :return: 词向量
+    """
+    import re
+    list_of_tokens = re.split(r'\W+', bigString)
+    return [tok.lower() for tok in list_of_tokens if len(tok) > 2]
+
+
+def spamText():
+    """
+    读取数据(25个垃圾邮件，25个非垃圾邮件)，并初始化好文本列表，类别列表，和用于构建词向量的文本向量
+    再从中构建一个测试集和一个训练集，两个集合中的邮件都是随机出来的
+    整个数据列表有 50 个，从中随机选择 10 个文件做测试集，同时从测试集中剔除
+    这种随机选择数据的一部分作为训练集，而剩余部分作为测试集的过程称为 留存交叉验证(hold-out cross validation)
+    :return: 
+    """
+    # 文本列表，保存所有读取到的词向量
+    doc_list = []
+
+    # 类别列表，保存每篇文本的类别
+    class_list = []
+
+    # 保存所有文本的词向量，并且这个是一维的
+    full_text = []
+
+    # 对测试文本数据进行读取，处理，存储
+    for i in range(1, 26):
+        word_list = textParse(open('email/spam/%d.txt' % i).read())
+        doc_list.append(word_list)
+        full_text.extend(word_list)
+        class_list.append(1)
+        word_list = textParse(open('email/ham/%d.txt' % i, ).read())
+        doc_list.append(word_list)
+        full_text.extend(word_list)
+        class_list.append(0)
+
+    # 获取测试文本中的词汇列表
+    vocab_list = createVocabList(doc_list)
+
+    # 训练集，保存的是文本集的下标，后面会剔除测试集的个数
+    training_set = list(range(50))
+
+    # 存储随机选取的测试集，保存的是文本集的下标
+    test_set = []
+    for i in range(10):
+        # 获取随机下标
+        rand_index = int(random.uniform(0, len(training_set)))
+
+        # 添加随机选取的测试集
+        test_set.append(training_set[rand_index])
+
+        # 将以选取的测试集从训练集中剔除
+        del (training_set[rand_index])
+    train_mat = []
+    train_classes = []
+    for doc_index in training_set:
+        # 添加训练文档对应词集
+        train_mat.append(setOfWords2Vec(vocab_list, doc_list[doc_index]))
+
+        # 添加训练文档对应的类别
+        train_classes.append(class_list[doc_index])
+
+    # 得到非垃圾邮件的概率，垃圾邮件的概率，以及所有文章中垃圾邮件占比
+    p0_v, p1_v, p_spam = trainNB0(array(train_mat), array(train_classes))
+
+    # 记录错误率
+    error_count = 0
+    for doc_index in test_set:
+        word_vector = setOfWords2Vec(vocab_list, doc_list[doc_index])
+        # 比对测试结果
+        if classifyNB(array(word_vector), p0_v, p1_v, p_spam) != class_list[doc_index]:
+            error_count += 1
+
+    # 输出错误率
+    print('the error rate is: ', float(error_count) / len(test_set))
