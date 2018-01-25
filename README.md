@@ -2,7 +2,7 @@
 
  + [x] knn
  + [x] decision tree
- + [ ] naive bayes
+ + [x] naive bayes
  + [ ] logisitic regression
  + [ ] svm
 

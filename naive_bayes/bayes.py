@@ -220,3 +220,71 @@ def spamText():
 
     # 输出错误率
     print('the error rate is: ', float(error_count) / len(test_set))
+
+
+def calcMostFreq(vocabList, fullText):
+    import operator
+    freq_dict = {}
+    for token in vocabList:
+        freq_dict[token] = fullText.count(token)
+    sorted_freq = sorted(freq_dict.items(), key=operator.itemgetter(1), reverse=True)
+    return sorted_freq
+
+
+def localWords(feed1, feed0):
+    import feedparser
+    doc_list = []
+    class_list = []
+    full_text = []
+    min_len = min(len(feed1['entries']), len(feed0['entries']))
+    for i in range(min_len):
+        word_list = textParse(feed1['entries'][i]['summary'])
+        doc_list.append(word_list)
+        full_text.extend(word_list)
+        class_list.append(1)
+        word_list = textParse(feed0['entries'][i]['summary'])
+        doc_list.append(word_list)
+        full_text.extend(word_list)
+        class_list.append(0)
+    vocab_list = createVocabList(doc_list)
+    top30_words = calcMostFreq(vocab_list, full_text)
+    for pairW in top30_words:
+        if pairW[0] in vocab_list:
+            vocab_list.remove(pairW[0])
+    training_set = list(range(2 * min_len))
+    test_set = []
+    for i in range(20):
+        rand_index = int(random.uniform(0, len(training_set)))
+        test_set.append(training_set[rand_index])
+        del (training_set[rand_index])
+    train_mat = []
+    train_classes = []
+    for doc_index in training_set:
+        train_mat.append(bagOfWords2VecMN(vocab_list, doc_list[doc_index]))
+        train_classes.append(class_list[doc_index])
+    p0_v, p1_v, p_spam = trainNB0(array(train_mat), array(train_classes))
+    error_count = 0
+    for doc_index in test_set:
+        word_vector = bagOfWords2VecMN(vocab_list, doc_list[doc_index])
+        if classifyNB(array(word_vector), p0_v, p1_v, p_spam) != class_list[doc_index]:
+            error_count += 1
+    print('the error rate is: ', float(error_count) / len(test_set))
+    return vocab_list, p0_v, p1_v
+
+
+def getTopWords(ny, sf):
+    import operator
+    vocab_list, p0_v, p1_v = localWords(ny, sf)
+    top_ny = []
+    top_sf = []
+    for i in range(len(p0_v)):
+        if p1_v > -6.0: top_sf.append((vocab_list[i], p0_v[i]))
+        if p1_v > -6.0: top_ny.append((vocab_list, p1_v[i]))
+    sorted_sf = sorted(top_sf, key=lambda pair: pair[1], reverse=True)
+    print("SF**SF**SF**SF**SF**SF**SF**SF**SF**SF**SF**SF**SF**SF**")
+    for item in sorted_sf:
+        print(item[0])
+    sorted_ny = sorted(top_ny, key=lambda pair: pair[1], reverse=True)
+    print("NY**NY**NY**NY**NY**NY**NY**NY**NY**NY**NY**NY**NY**NY**")
+    for item in sorted_ny:
+        print(item[0])
