@@ -269,3 +269,72 @@ youth	middle age 	  senior
  + 优点：计算代价不高，易于理解和实现
  + 缺点：容易欠拟合，分类精度可能不高
  + 适用数据类型：数值型和标称型数据
+
+
+我们希望我们的函数能够对我们的输入进行分类，如果是两个类别的话，那么会输出 0 和 1。这种函数称为 海维塞德阶跃函数 (Heaviside step function)，或称为单位阶跃函数。但是这种函数存在问题就是，该函数在跳跃点上瞬间从 0 跳到了 1，这个瞬间跳跃的过程有时很难处理好。那么这时候使用 Sigmoid 函数，该函数具有相同的性质，并且数学上更易处理
+
+<br />
+<div align="center">
+	<img src="./res/sigmoid.jpg"/>
+</div>
+<br />
+
+对 Sigmoid 函数而言，下面给出了两个不同坐标尺度下的两条曲线图
+
+<br />
+<div align="center">
+	<img src="./res/Sigmoid_plot_1.png"/>
+	<img src="./res/Sigmoid_plot_2.png"/>
+</div>
+<br />
+
+当 x 为 0 时，Sigmoid 函数值为 0.5。随着 x 的增大，对应的 Sigmoid 值逼近于 1；而随着 x 的减少，Sigmoid 值逼近于 0。如果横坐标刻度足够大，Sigmoid 函数就像一个阶跃函数
+
+因此，为了实现 Logistic 回归分类器，我们可以在每个特征上都乘以一个回归系数（Weight），然后所有的结果值相加，将这个总和带入 Sigmoid 函数，进而得到一个范围在 0 ~ 1 之间的数值。任何大于 0.5 的数据被归为 1 类，任何小于 0.5 的数据被归为 0 类。所以，Logistic 回归也可以被看成是一种概率估计。
+
+## 基于最优化方法的最佳回归系数确定
+
+现在问题就转变为了：最佳回归系数（Weight）是多少？如何确定它们的大小？
+
+若 Sigmoid 函数的输入记为 z，那么就可以得到
+
+<br />
+<div align="center">
+	<img src="./res/z_weight_input_method.jpg"/>
+</div>
+<br />
+
+如果采用向量的写法，则可以写成
+
+<br />
+<div align="center">
+	<img src="./res/z_weight_input_method_2.jpg"/>
+</div>
+<br />
+
+
+## 梯度上升法
+
+> 要找到某函数的最大值，最好的方法是沿着该函数的梯度方向探寻。如果梯度记为 ▽ ，则函数 f(x, y) 的梯度由下式表示：
+
+
+<br />
+<div align="center">
+	<img src="./res/gradient_ascent_method.png"/>
+</div>
+<br />
+
+这个梯度意味着要沿 x 的方向移动 ![](./res/_x.png) ，沿 y 的方向移动 ![](./res/_y.png)。其中，函数 `f(x,y)` 必须要在待计算的点上有定义并且可微。
+
+梯度算子总是指向函数值增长最快的方向。这里所说的是移动方向，而未提到移动量的大小。该量值称为步长，记作 `α`。用向量来表示的话，梯度上升算法的迭代公式如下：
+
+<br />
+<div align="center">
+	<img src="./res/gradient_ascent_iteration_formula.png"/>
+</div>
+<br />
+
+该公式一直迭代执行，直至达到某个停止条件为止，比如迭代次数达到某个指定值或算法达到某个可以允许的误差范围
+
+> 与梯度上升算法相对应有一个**梯度下降算法**，与梯度上升迭代公式的区别就是把 `+` 换成了 `-`。
+> 梯度上升算法用来求函数的最大值，而梯度下降算法用来求函数的最小值
