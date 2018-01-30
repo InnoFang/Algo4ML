@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1f5aa4d5-b6c5-488e-8108-59d37e7d93f6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/knn/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/logistic_regression/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/logistic_regression/data/testSet.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/logistic_regression/logRegres.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/logistic_regression/test.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/naive_bayes/__init__.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/res/gradient_ascent _method.png" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/gradient_ascent_method.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logistic_regression/logRegres.py" afterPath="$PROJECT_DIR$/logistic_regression/logRegres.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logistic_regression/test.py" afterPath="$PROJECT_DIR$/logistic_regression/test.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,7 +23,7 @@
     <SUITE FILE_PATH="coverage/Algo4ML$Unittests_for_knn_kNN_datingClassTest.coverage" NAME="Unittests for knn.kNN.datingClassTest Coverage Results" MODIFIED="1514777820631" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/Algo4ML$Unittests_for_knn_kNN_handwritingClassTest.coverage" NAME="Unittests for knn.kNN.handwritingClassTest Coverage Results" MODIFIED="1514781209772" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/Algo4ML$visual.coverage" NAME="visual Coverage Results" MODIFIED="1514728536249" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/knn" />
-    <SUITE FILE_PATH="coverage/Algo4ML$test.coverage" NAME="test Coverage Results" MODIFIED="1517307667057" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/logistic_regression" />
+    <SUITE FILE_PATH="coverage/Algo4ML$test.coverage" NAME="test Coverage Results" MODIFIED="1517312127901" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/logistic_regression" />
     <SUITE FILE_PATH="coverage/Algo4ML$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1515039938691" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/decise_tree" />
     <SUITE FILE_PATH="coverage/Algo4ML$numpytest.coverage" NAME="numpytest Coverage Results" MODIFIED="1514641444580" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Algo4ML$trees.coverage" NAME="trees Coverage Results" MODIFIED="1514971697849" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/decise_tree" />
@@ -47,31 +43,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="logRegres.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="logRegres.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/logistic_regression/logRegres.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="331">
-              <caret line="62" column="32" lean-forward="false" selection-start-line="62" selection-start-column="32" selection-end-line="62" selection-end-column="32" />
+            <state relative-caret-position="1937">
+              <caret line="106" column="4" lean-forward="false" selection-start-line="106" selection-start-column="4" selection-end-line="106" selection-end-column="4" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/logistic_regression/test.py">
+      <file leaf-file-name="testSet.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/logistic_regression/data/testSet.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="3" column="40" lean-forward="true" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
+            <state relative-caret-position="252">
+              <caret line="9" column="25" lean-forward="true" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/naive_bayes/test.py">
+        <entry file="file://$PROJECT_DIR$/logistic_regression/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="784">
-              <caret line="28" column="28" lean-forward="false" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
+            <state relative-caret-position="84">
+              <caret line="3" column="8" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="8" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="defmatrix.py" pinned="false" current-in-tab="false">
+        <entry file="file://D:/Python 3.5/Lib/site-packages/numpy/matrixlib/defmatrix.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-89">
+              <caret line="940" column="11" lean-forward="true" selection-start-line="940" selection-start-column="11" selection-end-line="940" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -95,11 +103,15 @@
       <find>extend</find>
       <find>SF</find>
       <find>label_mat</find>
+      <find>w</find>
+      <find>x</find>
     </findStrings>
     <replaceStrings>
       <replace>侮辱类</replace>
       <replace>词集</replace>
       <replace>NY</replace>
+      <replace>W</replace>
+      <replace>X</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -121,8 +133,8 @@
         <option value="$PROJECT_DIR$/naive_bayes/email/ham/23.txt" />
         <option value="$PROJECT_DIR$/naive_bayes/bayes.py" />
         <option value="$PROJECT_DIR$/naive_bayes/test.py" />
-        <option value="$PROJECT_DIR$/logistic_regression/logRegres.py" />
         <option value="$PROJECT_DIR$/logistic_regression/test.py" />
+        <option value="$PROJECT_DIR$/logistic_regression/logRegres.py" />
       </list>
     </option>
   </component>
@@ -176,7 +188,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="naive_bayes" />
+              <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -191,6 +203,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="logistic_regression" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Algo4ML" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Algo4ML" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logistic_regression" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -567,7 +597,14 @@
       <option name="project" value="LOCAL" />
       <updated>1516844405685</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary=":sparkles: update logistic regression learning code">
+      <created>1517307695679</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1517307695679</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -621,7 +658,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35461372" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.518648" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17482518" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3170163" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" x="-1708" y="0" width="1708" height="960" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -669,27 +706,14 @@
     <MESSAGE value=":fire: clean" />
     <MESSAGE value=":sparkles: decision tree" />
     <MESSAGE value=":sparkles: update naive bayes example" />
-    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: update naive bayes example" />
+    <MESSAGE value=":sparkles: update logistic regression learning code" />
+    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: update logistic regression learning code" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://D:/Python 3.5/Lib/operator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7644">
-          <caret line="273" column="21" lean-forward="false" selection-start-line="273" selection-start-column="21" selection-end-line="273" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Python 3.5/Lib/site-packages/numpy/lib/shape_base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23884">
-          <caret line="865" column="21" lean-forward="false" selection-start-line="865" selection-start-column="21" selection-end-line="865" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharm2017.1/system/python_stubs/466631872/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="78260">
@@ -830,13 +854,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="517" column="4" lean-forward="false" selection-start-line="517" selection-start-column="4" selection-end-line="517" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Python 3.5/Lib/site-packages/matplotlib/axes/_axes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="648" column="8" lean-forward="false" selection-start-line="648" selection-start-column="8" selection-end-line="648" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -984,26 +1001,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/logistic_regression/data/testSet.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharm2017.1/system/python_stubs/466631872/numpy/core/umath.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="185">
           <caret line="1399" column="4" lean-forward="false" selection-start-line="1399" selection-start-column="4" selection-end-line="1399" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logistic_regression/logRegres.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="62" column="32" lean-forward="false" selection-start-line="62" selection-start-column="32" selection-end-line="62" selection-end-column="32" />
           <folding />
         </state>
       </provider>
@@ -1016,10 +1017,52 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://D:/Python 3.5/Lib/site-packages/pandas/plotting/_core.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-41">
+          <caret line="2833" column="8" lean-forward="false" selection-start-line="2833" selection-start-column="8" selection-end-line="2833" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Python 3.5/Lib/site-packages/matplotlib/axes/_axes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-797">
+          <caret line="3798" column="44" lean-forward="false" selection-start-line="3798" selection-start-column="44" selection-end-line="3798" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Python 3.5/Lib/site-packages/numpy/matrixlib/defmatrix.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-89">
+          <caret line="940" column="11" lean-forward="true" selection-start-line="940" selection-start-column="11" selection-end-line="940" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/logistic_regression/test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
-          <caret line="3" column="40" lean-forward="true" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
+          <caret line="3" column="8" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logistic_regression/data/testSet.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="9" column="25" lean-forward="true" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logistic_regression/logRegres.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1937">
+          <caret line="106" column="4" lean-forward="false" selection-start-line="106" selection-start-column="4" selection-end-line="106" selection-end-column="4" />
           <folding />
         </state>
       </provider>
