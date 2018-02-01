@@ -68,8 +68,8 @@ def trainNB0(trainMatrix, trainCategory):
     :param trainMatrix: 
     :param trainCategory: 
     :return: 
-      p0_vect : 非侮辱类文章中对应单词在所有这类文章中出现的概率
-      p1_vect : 侮辱类文章中对应单词在所有这类文章中出现的概率
+      p0_vect : 非侮辱类(或 0 类)文章中对应单词在所有这类文章中出现的概率
+      p1_vect : 侮辱类(或 1 类)文章中对应单词在所有这类文章中出现的概率
       p_abusive ：整个训练集中，侮辱类文章出现的概率
     """
     # 获取训练文档数目
@@ -153,7 +153,7 @@ def textParse(bigString):
     return [tok.lower() for tok in list_of_tokens if len(tok) > 2]
 
 
-def spamText():
+def spamTest():
     """
     读取数据(25个垃圾邮件，25个非垃圾邮件)，并初始化好文本列表，类别列表，和用于构建词向量的文本向量
     再从中构建一个测试集和一个训练集，两个集合中的邮件都是随机出来的
@@ -223,21 +223,46 @@ def spamText():
 
 
 def calcMostFreq(vocabList, fullText):
+    """
+    该函数遍历词汇表中的每个词并统计它在文本中出现的次数
+    然后根据出现次数从高到低对词典进行排序
+    最后返回排序最高的 30 个单词
+    :param vocabList: 数据集的词汇表
+    :param fullText: 数据集的全部词汇
+    :return: 返回排序最高的 30 个单词
+    """
     import operator
     freq_dict = {}
     for token in vocabList:
+        # token 是词汇表中的词，获取该词在整个文本中出现的次数
         freq_dict[token] = fullText.count(token)
+
+    # 降序排序，出现次数最多词汇在前
     sorted_freq = sorted(freq_dict.items(), key=operator.itemgetter(1), reverse=True)
-    return sorted_freq
+
+    # 返回排序最高的 30 个单词
+    return sorted_freq[:30]
 
 
 def localWords(feed1, feed0):
+    """
+    与 @spamTest 基本类似，区别在于这里访问的是 RSS 源而不是文件
+    :param feed1: feedparser.parse('http://newyork.craigslist.org/stp/index.rss')
+    :param feed0: feedparser.parse('http://sfbay.craigslist.org/stp/index.rss')
+    :return: 
+    """
     import feedparser
     doc_list = []
     class_list = []
     full_text = []
+
+    # feed 下 的 entries 为 RSS 源
     min_len = min(len(feed1['entries']), len(feed0['entries']))
+
+    # 访问 RSS 源
     for i in range(min_len):
+        # 访问 feed1 和 feed0 的第 i 个 RSS 源的 summary
+        # 添加词汇并且扩展总词汇
         word_list = textParse(feed1['entries'][i]['summary'])
         doc_list.append(word_list)
         full_text.extend(word_list)
@@ -246,13 +271,23 @@ def localWords(feed1, feed0):
         doc_list.append(word_list)
         full_text.extend(word_list)
         class_list.append(0)
+
+    # 获取所有文本中出现的词汇，即数据集的词汇表
     vocab_list = createVocabList(doc_list)
+
+    # 获取频率最高的 30 个单词
     top30_words = calcMostFreq(vocab_list, full_text)
+
+    # 从词汇表中去掉频率最高的 30 个单词
     for pairW in top30_words:
         if pairW[0] in vocab_list:
             vocab_list.remove(pairW[0])
+
+    # 初始化训练集
     training_set = list(range(2 * min_len))
     test_set = []
+
+    # 随机选取 20 个作为测试集，并将选取的测试集从训练集中删去
     for i in range(20):
         rand_index = int(random.uniform(0, len(training_set)))
         test_set.append(training_set[rand_index])
@@ -263,12 +298,15 @@ def localWords(feed1, feed0):
         train_mat.append(bagOfWords2VecMN(vocab_list, doc_list[doc_index]))
         train_classes.append(class_list[doc_index])
     p0_v, p1_v, p_spam = trainNB0(array(train_mat), array(train_classes))
+
+    # 统计错误数
     error_count = 0
     for doc_index in test_set:
         word_vector = bagOfWords2VecMN(vocab_list, doc_list[doc_index])
         if classifyNB(array(word_vector), p0_v, p1_v, p_spam) != class_list[doc_index]:
             error_count += 1
     print('the error rate is: ', float(error_count) / len(test_set))
+
     return vocab_list, p0_v, p1_v
 
 
@@ -278,13 +316,22 @@ def getTopWords(ny, sf):
     top_ny = []
     top_sf = []
     for i in range(len(p0_v)):
-        if p1_v > -6.0: top_sf.append((vocab_list[i], p0_v[i]))
-        if p1_v > -6.0: top_ny.append((vocab_list, p1_v[i]))
+        # 添加每一个词汇及其概率
+        if p0_v[i] > -6.0: top_sf.append((vocab_list[i], p0_v[i]))
+        if p1_v[i] > -6.0: top_ny.append((vocab_list[i], p1_v[i]))
+
+    # 对 top_sf 按 sf 数据的词频进行排序，频率高的在前
     sorted_sf = sorted(top_sf, key=lambda pair: pair[1], reverse=True)
     print("SF**SF**SF**SF**SF**SF**SF**SF**SF**SF**SF**SF**SF**SF**")
+
+    # 遍历输出排序好的数据
     for item in sorted_sf:
         print(item[0])
+
+    # 对 top_ny 按 ny 数据的词频进行排序，频率高的在前
     sorted_ny = sorted(top_ny, key=lambda pair: pair[1], reverse=True)
     print("NY**NY**NY**NY**NY**NY**NY**NY**NY**NY**NY**NY**NY**NY**")
+
+    # 遍历输出排序好的数据
     for item in sorted_ny:
         print(item[0])

@@ -40,6 +40,6 @@ import feedparser
 
 ny = feedparser.parse('http://newyork.craigslist.org/stp/index.rss')
 sf = feedparser.parse('http://sfbay.craigslist.org/stp/index.rss')
-vocab_list, p_sf, p_ny = bayes.localWords(ny, sf)
-vocab_list, p_sf, p_ny = bayes.localWords(ny, sf)
-bayes.getTopWords(p_ny, p_sf)
+# vocab_list, p_sf, p_ny = bayes.localWords(ny, sf)
+# vocab_list, p_sf, p_ny = bayes.localWords(ny, sf)
+bayes.getTopWords(ny, sf)
