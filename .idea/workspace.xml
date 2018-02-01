@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1f5aa4d5-b6c5-488e-8108-59d37e7d93f6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/naive_bayes/bayes.py" afterPath="$PROJECT_DIR$/naive_bayes/bayes.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/naive_bayes/test.py" afterPath="$PROJECT_DIR$/naive_bayes/test.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,23 +42,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="test.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/naive_bayes/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1057">
-              <caret line="40" column="23" lean-forward="false" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="56" />
-              <folding>
-                <element signature="e#0#29#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bayes.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/naive_bayes/bayes.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="468">
-              <caret line="326" column="16" lean-forward="false" selection-start-line="326" selection-start-column="16" selection-end-line="326" selection-end-column="16" />
+            <state relative-caret-position="275">
+              <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -97,6 +83,9 @@
       <find>entries</find>
       <find>ones</find>
       <find>spamTest</find>
+      <find>trainNb</find>
+      <find>trainNB0</find>
+      <find>class_list</find>
     </findStrings>
     <replaceStrings>
       <replace>侮辱类</replace>
@@ -132,8 +121,8 @@
         <option value="$PROJECT_DIR$/counting_code_lines.py" />
         <option value="$PROJECT_DIR$/ImageDownloader.py" />
         <option value="$PROJECT_DIR$/test.py" />
-        <option value="$PROJECT_DIR$/naive_bayes/test.py" />
         <option value="$PROJECT_DIR$/naive_bayes/bayes.py" />
+        <option value="$PROJECT_DIR$/naive_bayes/test.py" />
       </list>
     </option>
   </component>
@@ -998,20 +987,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/naive_bayes/test.py">
+    <entry file="file://$PROJECT_DIR$/naive_bayes/bayes.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1057">
-          <caret line="40" column="23" lean-forward="false" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="56" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="157">
+          <caret line="305" column="75" lean-forward="false" selection-start-line="305" selection-start-column="65" selection-end-line="305" selection-end-column="75" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/naive_bayes/bayes.py">
+    <entry file="file://$PROJECT_DIR$/naive_bayes/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="326" column="16" lean-forward="false" selection-start-line="326" selection-start-column="16" selection-end-line="326" selection-end-column="16" />
+        <state relative-caret-position="275">
+          <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
           <folding />
         </state>
       </provider>
