@@ -40,7 +40,7 @@ def gradAscent(dataMatIn, classLabelLs):
         使用 alpha * gradient 更新回归系数的向量
         返回回归系数
     ----------------------
-    公式：W = w + α▽f(w)
+    公式：w = w + α▽f(w)
     :param dataMatIn: 数据矩阵
     :param classLabelLs: 类别向量
     :return: 得到最终的回归系数
@@ -80,7 +80,7 @@ def gradAscent(dataMatIn, classLabelLs):
 def plotBestFit(weights):
     """
     画出决策边界
-    :param weights: 
+    :param weights: [numpy.ndarray]
     :return: 
     """
     import matplotlib.pyplot as plt
@@ -92,13 +92,17 @@ def plotBestFit(weights):
     n = data_arr.shape[0]
 
     # 分别记录 X1 类别和 X2 类别每个点的横纵坐标
-    xcord1 = []; ycord1 = []
-    xcord2 = []; ycord2 = []
+    xcord1 = []
+    ycord1 = []
+    xcord2 = []
+    ycord2 = []
     for i in range(n):
         if int(label_mat[i]) == 1:
-            xcord1.append(data_arr[i, 1]);ycord1.append(data_arr[i, 2])
+            xcord1.append(data_arr[i, 1])
+            ycord1.append(data_arr[i, 2])
         else:
-            xcord2.append(data_arr[i, 1]);ycord2.append(data_arr[i, 2])
+            xcord2.append(data_arr[i, 1])
+            ycord2.append(data_arr[i, 2])
     fig = plt.figure()
     ax = fig.add_subplot(111)
     ax.scatter(xcord1, ycord1, s=30, c='red', marker='s')
@@ -110,5 +114,89 @@ def plotBestFit(weights):
     # 我们需要解出 X2 和 X1 的关系式，即分隔线的方程
     y = (-weights[0] - weights[1] * x) / weights[2]
     ax.plot(x, y)
-    plt.xlabel('X1'); plt.ylabel('X2')
+    plt.xlabel('X1')
+    plt.ylabel('X2')
     plt.show()
+
+
+def stocGradAscent0(dataMatrix, classLabels):
+    """
+    所有回归系数初始化为 1
+    对数据集中每个样本
+        计算该样本的梯度
+        使用 alpha * gradient 更新回归系数值
+    返回回归值
+    :param dataMatrix: 
+    :param classLabels: 
+    :return: 
+    """
+    m, n = dataMatrix.shape
+    alpha = 0.01
+    weights = np.ones(n)
+    for i in range(m):
+        h = sigmoid(sum(dataMatrix[i] * weights))
+        error = classLabels[i] - h
+        weights = weights + alpha * error * dataMatrix[i]
+    return weights
+
+
+def stocGradAscent1(dataMatrix, classLabels, numIter=150):
+    m, n = dataMatrix.shape
+    weights = np.ones(n)
+    for j in range(numIter):
+        dataIndex = list(range(m))
+        for i in range(m):
+            # alpha 每次迭代时需要调整
+            alpha = 4 / (1.0 + j + i) + 0.01
+
+            # 随机选取更新
+            randIndex = int(np.random.uniform(0, len(dataIndex)))
+            h = sigmoid(sum(dataMatrix[randIndex] * weights))
+            error = classLabels[randIndex] - h
+            weights = weights + alpha * error * dataMatrix[randIndex]
+            del (dataIndex[randIndex])
+    return weights
+
+
+def classifyVector(inX, weights):
+    prob = sigmoid(sum(inX * weights))
+    if prob > 0.5:
+        return 1.0
+    else:
+        return 0.0
+
+
+def colicTest():
+    fr_train = open('data/horseColicTraining.txt')
+    fr_test = open('data/horseColicTest.txt')
+    training_set = []
+    training_labels = []
+    for line in fr_train.readlines():
+        curr_line = line.strip().split('\t')
+        line_arr = []
+        for i in range(21):
+            line_arr.append(float(curr_line[i]))
+        training_set.append(line_arr)
+        training_labels.append(float(curr_line[21]))
+    training_weights = stocGradAscent1(np.array(training_set), training_labels, 1000)
+    error_count = 0
+    num_test_vec = 0.0
+    for line in fr_test.readlines():
+        num_test_vec += 1.0
+        curr_line = line.strip().split('\t')
+        line_arr = []
+        for i in range(21):
+            line_arr.append(float(curr_line[i]))
+        if int(classifyVector(np.array(line_arr), training_weights)) != int(curr_line[21]):
+            error_count += 1
+    error_rate = (float(error_count) / num_test_vec)
+    print('the error rate of this test is: %f' % error_rate)
+    return error_rate
+
+
+def multiTest():
+    num_tests = 10
+    error_sum = 0.0
+    for k in range(num_tests):
+        error_sum += colicTest()
+    print('after %d iterations the average error rate is: %f' % (num_tests, error_sum / float(num_tests)))
