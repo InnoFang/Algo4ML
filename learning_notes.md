@@ -320,7 +320,7 @@ youth	middle age 	  senior
 
 <br />
 <div align="center">
-	<img src="./res/gradient_ascent_method.png"/>
+  <img src="./res/gradient_ascent_method.png"/>
 </div>
 <br />
 
@@ -330,7 +330,7 @@ youth	middle age 	  senior
 
 <br />
 <div align="center">
-	<img src="./res/gradient_ascent_iteration_formula.png"/>
+	<img src="https://raw.githubusercontent.com/InnoFang/Algo4ML/master/res/gradient_ascent_method.png"/>
 </div>
 <br />
 
@@ -357,3 +357,12 @@ youth	middle age 	  senior
  + 忽略有缺失值的版本
  + 使用相似样本的均值填补添补缺失值
  + 使用另外的机器学习算法预测缺失值
+
+## Logistic 回归小结
+
+Logistic 回归的目的是寻找一个非线性函数 Sigmoid 的最佳拟合参数，求解过程可以由最优化算法来完成。在最优化算法中，最常用的就是梯度上升算法，而梯度上升算法
+又可以简化成随机梯度上升算法
+
+随机梯度上升算法与梯度上升算法的效果相当，但占用更少的计算资源。此外，随机梯度上升是一个在线算法，它可以在新数据到来时就完成参数更新，而不需要重新读取整个数据集来进行批处理运算。
+
+机器学习的一个重要问题就是如何处理缺失数据。这个问题没有标准答案，取决于实际应用中的需求。现有一些解决方案，每种方案都各有优缺点。
