@@ -330,7 +330,7 @@ youth	middle age 	  senior
 
 <br />
 <div align="center">
-	<img src="https://raw.githubusercontent.com/InnoFang/Algo4ML/master/res/gradient_ascent_method.png"/>
+	<img src="./res/gradient_ascent_iteration_formula.png"/>
 </div>
 <br />
 
