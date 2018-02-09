@@ -385,11 +385,7 @@ SVM 的工作原理大致如下
 
 <br />
 <div align="center">
-
-```
 <img src="./res/svm.jpg"/>
-```
-
 </div>
 <br />
 
@@ -407,11 +403,7 @@ SVM 的工作原理大致如下
 
 <br />
 <div align="center">
-
-```
 <img src="./res/distanceOfPointToLine.png"/>
-```
-
 </div>
 <br />
 
@@ -421,11 +413,7 @@ SVM 的工作原理大致如下
 
 <br />
 <div align="center">
-
-```
 <img src="./res/hyperplane.png"/>
-```
-
 </div>
 <br />
 
@@ -437,11 +425,7 @@ SVM 的工作原理大致如下
 
 <br />
 <div align="center"> 
-
-```
 <img src="./res/distanceOfPointToHyperplane.png"/>
-```
-
 </div>
 <br />
 

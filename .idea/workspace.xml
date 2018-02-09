@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1f5aa4d5-b6c5-488e-8108-59d37e7d93f6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/distanceOfPointToHyperplane.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/distanceOfPointToLine.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/hyperplane.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/svm.jpg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learning_notes.md" afterPath="$PROJECT_DIR$/learning_notes.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
