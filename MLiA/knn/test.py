@@ -1,10 +1,7 @@
 """
 not important
 """
-import matplotlib
-import matplotlib.pyplot as plt
-import numpy as np
-from knn import kNN
+from MLiA.knn import kNN
 
 # dating_data_mat, dating_labels = kNN.file2matrix('data/datingTestSet2.txt')
 

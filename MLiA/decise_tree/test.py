@@ -1,5 +1,6 @@
-from decise_tree import trees
 from decise_tree import treePlotter
+
+from MLiA.decise_tree import trees
 
 # 获得数据集和标签
 my_data, labels = trees.createDataSet()
