@@ -1,6 +1,3 @@
-from functools import reduce
-
-
 class Perceptron:
     def __init__(self, input_num, activator):
         """
@@ -25,14 +22,9 @@ class Perceptron:
         -----------------------------
         把input_vec[x1,x2,x3,...]和weights[w1,w2,w3,...]打包在一起
         变成[(x1,w1),(x2,w2),(x3,w3),...]
-        然后利用map函数计算[x1*w1, x2*w2, x3*w3]
-        最后利用reduce求和
+        对input_vec和weights加权求和
         """
-        return self.activator(
-            reduce(lambda a, b: a + b,
-                   map(lambda x, w: x * w,
-                       zip(input_vec, self.weights))
-                   , 0.0) + self.bias)
+        return self.activator(sum([x * w for (x, w) in zip(input_vec, self.weights)]) + self.bias)
 
     def train(self, input_vecs, labels, interation, rate):
         """
@@ -44,7 +36,6 @@ class Perceptron:
     def _one_iteration(self, input_vecs, labels, rate):
         """
         一次迭代，把所有的训练数据过一遍
-        ---------------------------
         """
         # 把输入和输出打包在一起，成为样本的列表[(input_vec, label), ...]
         # 而每个训练样本是(input_vec, label)
@@ -64,8 +55,6 @@ class Perceptron:
         # 变成[(x1,w1),(x2,w2),(x3,w3),...]
         # 然后利用感知器规则更新权重
         delta = label - output
-        self.weights = map(
-            lambda x, w: w + rate * delta * x,
-            zip(input_vec, self.weights))
+        self.weights = list(map(lambda tp: tp[1] + rate * delta * tp[0], zip(input_vec, self.weights)))
         # 更新 bias
         self.bias += rate * delta
