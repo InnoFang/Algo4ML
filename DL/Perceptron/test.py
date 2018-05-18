@@ -1,4 +1,4 @@
-from nn.Perceptron.perceptron import Perceptron
+from DL.Perceptron.perceptron import Perceptron
 
 
 def f(x):
