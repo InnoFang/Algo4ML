@@ -429,3 +429,55 @@ class Network:
                 for conn in node.downstream:
                     # 计算梯度
                     conn.calc_gradient()
+
+    def dump(self):
+        """
+        打印出我们的网络信息
+        """
+        # 遍历所有的 layers
+        for layer in self.layers:
+            # 将所有的层的信息打印出来
+            layer.dump()
+
+
+class Normalizer:
+    """
+    归一化工具
+    """
+
+    def __init__(self):
+        # 初始化 16 进制的数，用来判断位的，分别是
+        # 0x1 ---- 00000001
+        # 0x2 ---- 00000010
+        # 0x4 ---- 00000100
+        # 0x8 ---- 00001000
+        # 0x10 --- 00010000
+        # 0x20 --- 00100000
+        # 0x40 --- 01000000
+        # 0x80 --- 10000000
+        self.mask = [0x1, 0x2, 0x4, 0x8, 0x10, 0x20, 0x40, 0x80]
+
+    def norm(self, number):
+        """
+        对 number 进行规范化
+        :param number: 要规范化的数据
+        :return: 规范后的数据
+        """
+        # 此方法就相当于判断一个 8 位的向量，哪一位上有数字，
+        # 如果有就将这个数设置为  0.9 ，否则，设置为 0.1，
+        # 通俗比较来说，就是我们这里用 0.9 表示 1，用 0.1 表示 0
+        return list(map(lambda m: 0.9 if number & m else 0.1, self.mask))
+
+    def denorm(self, vec):
+        """
+        对我们得到的向量进行反规范化
+        :param vec: 得到的向量
+        :return: 最终预测的结果
+        """
+        # 进行二分类，大于 0.5 就设置为 1，小于 0.5 就设置为 0
+        binary = list(map(lambda i: 1 if i > 0.5 else 0, vec))
+        # 遍历 mask
+        for i in range(len(self.mask)):
+            binary[i] = binary[i] * self.mask[i]
+        # 将结果相加得到最终的预测结果
+        return reduce(lambda x, y: x + y, binary)
