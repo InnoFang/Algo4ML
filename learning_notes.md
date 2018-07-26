@@ -275,7 +275,7 @@ youth	middle age 	  senior
 
 <br />
 <div align="center">
-	<img src="./res/sigmoid.jpg"/>
+	<img src="https://github.com/InnoFang/oh-my-study-notes/blob/image-hosting/Algo4ML/sigmoid.jpg?raw=true"/>
 </div>
 <br />
 
@@ -283,8 +283,8 @@ youth	middle age 	  senior
 
 <br />
 <div align="center">
-	<img src="./res/Sigmoid_plot_1.png"/>
-	<img src="./res/Sigmoid_plot_2.png"/>
+	<img src="https://github.com/InnoFang/oh-my-study-notes/blob/image-hosting/Algo4ML//Sigmoid_plot_1.png?raw=true"/>
+	<img src="https://github.com/InnoFang/oh-my-study-notes/blob/image-hosting/Algo4ML//Sigmoid_plot_2.png?raw=true"/>
 </div>
 <br />
 
@@ -300,7 +300,7 @@ youth	middle age 	  senior
 
 <br />
 <div align="center">
-	<img src="./res/z_weight_input_method.jpg"/>
+	<img src="https://github.com/InnoFang/oh-my-study-notes/blob/image-hosting/Algo4ML/z_weight_input_method.jpg?raw=true"/>
 </div>
 <br />
 
@@ -308,7 +308,7 @@ youth	middle age 	  senior
 
 <br />
 <div align="center">
-	<img src="./res/z_weight_input_method_2.jpg"/>
+	<img src="https://github.com/InnoFang/oh-my-study-notes/blob/image-hosting/Algo4ML/z_weight_input_method_2.jpg?raw=true"/>
 </div>
 <br />
 
@@ -320,7 +320,7 @@ youth	middle age 	  senior
 
 <br />
 <div align="center">
-  <img src="./res/gradient_ascent_method.png"/>
+  <img src="https://github.com/InnoFang/oh-my-study-notes/blob/image-hosting/Algo4ML/gradient_ascent_method.png?raw=true"/>
 </div>
 <br />
 
@@ -330,7 +330,7 @@ youth	middle age 	  senior
 
 <br />
 <div align="center">
-	<img src="./res/gradient_ascent_iteration_formula.png"/>
+	<img src="https://github.com/InnoFang/oh-my-study-notes/blob/image-hosting/Algo4ML/gradient_ascent_iteration_formula.png?raw=true"/>
 </div>
 <br />
 
@@ -385,7 +385,7 @@ SVM 的工作原理大致如下
 
 <br />
 <div align="center">
-<img src="./res/svm.jpg"/>
+<img src="https://github.com/InnoFang/oh-my-study-notes/blob/image-hosting/Algo4ML/svm.jpg?raw=true"/>
 </div>
 <br />
 
@@ -403,7 +403,7 @@ SVM 的工作原理大致如下
 
 <br />
 <div align="center">
-<img src="./res/distanceOfPointToLine.png"/>
+<img src="https://github.com/InnoFang/oh-my-study-notes/blob/image-hosting/Algo4ML/distanceOfPointToLine.png?raw=true"/>
 </div>
 <br />
 
@@ -413,7 +413,7 @@ SVM 的工作原理大致如下
 
 <br />
 <div align="center">
-<img src="./res/hyperplane.png"/>
+<img src="https://github.com/InnoFang/oh-my-study-notes/blob/image-hosting/Algo4ML/hyperplane.png?raw=true"/>
 </div>
 <br />
 
@@ -425,7 +425,7 @@ SVM 的工作原理大致如下
 
 <br />
 <div align="center"> 
-<img src="./res/distanceOfPointToHyperplane.png"/>
+<img src="https://github.com/InnoFang/oh-my-study-notes/blob/image-hosting/Algo4ML/distanceOfPointToHyperplane.png?raw=true"/>
 </div>
 <br />
 
