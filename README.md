@@ -1,6 +1,6 @@
 # Algorithm for machine learning
 
-![](https://img.shields.io/badge/python-3.5-blue.svg)
+![](https://img.shields.io/badge/python-3.5-blue.svg) [![Build Status](https://travis-ci.org/InnoFang/Algo4ML.svg?branch=master)](https://travis-ci.org/InnoFang/Algo4ML)
 
  [MLiA learning notes](https://github.com/InnoFang/Algo4ML/blob/master/learning_notes.md)
 
