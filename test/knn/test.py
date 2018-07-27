@@ -6,13 +6,11 @@ import unittest
 
 class TestKNN(unittest.TestCase):
 
-    # @unittest.skip("i don't want to run this case.")
     def test_load_data(self):
         dating_data_mat, dating_labels = load_data.load_datingTestSet2()
         print(dating_data_mat)
         print(dating_labels[0:20])
 
-    @unittest.skip("i don't want to run this case.")
     def test_data_plot(self):
         dating_data_mat, dating_labels = load_data.load_datingTestSet2()
         fig = plt.figure()
@@ -25,14 +23,13 @@ class TestKNN(unittest.TestCase):
         plt.ylabel('Liters of Ice Cream Consumed Per Week')
 
         label = ['didntLike', 'smallDoses', 'largeDoses']
-        # # loc 设置显示的位置，0是自适应
-        # # ncol 设置显示的列数
+        # loc 设置显示的位置，0是自适应
+        # ncol 设置显示的列数
         ax.legend(label, loc=0)
         handles, labels = ax.get_legend_handles_labels()
         ax.legend(handles[::-1], labels[::-1])
         plt.show()
 
-    @unittest.skip
     def test_autoNorm(self):
         dating_data_mat, dating_labels = load_data.load_datingTestSet2()
         norm_mat, ranges, min_vals = kNN.autoNorm(dating_data_mat)
@@ -40,7 +37,6 @@ class TestKNN(unittest.TestCase):
         print(ranges)
         print(min_vals)
 
-    @unittest.skip
     def test_datingClassTest(self):
         kNN.datingClassTest()
         # """
@@ -79,11 +75,9 @@ class TestKNN(unittest.TestCase):
         # # 打印输出错误率
         # print('the total error rate is: %f' % (error_count / float(num_test_vecs)))
 
-    @unittest.skip
     def test_classifyPersson(self):
         kNN.classifyPerson()
 
-    @unittest.skip
     def test_img2verctor(self):
         import pkg_resources
         filename = pkg_resources.resource_filename(kNN.__name__, 'data/testDigits/0_0.txt')
@@ -92,7 +86,6 @@ class TestKNN(unittest.TestCase):
         for i in range(32):
             print(test_vector[0, 0 + i * 32:31 + i * 32])
 
-    @unittest.skip
     def test_handwritingClassTest(self):
         kNN.handwritingClassTest()
 
