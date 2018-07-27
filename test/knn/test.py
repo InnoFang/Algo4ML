@@ -6,19 +6,11 @@ import unittest
 
 class TestKNN(unittest.TestCase):
 
-<<<<<<< HEAD
-=======
-    # @unittest.skip("i don't want to run this case.")
->>>>>>> 0dd7123256ac67c72ddffa94d2f951a2647dfd7d
     def test_load_data(self):
         dating_data_mat, dating_labels = load_data.load_datingTestSet2()
         print(dating_data_mat)
         print(dating_labels[0:20])
 
-<<<<<<< HEAD
-=======
-    @unittest.skip("i don't want to run this case.")
->>>>>>> 0dd7123256ac67c72ddffa94d2f951a2647dfd7d
     def test_data_plot(self):
         dating_data_mat, dating_labels = load_data.load_datingTestSet2()
         fig = plt.figure()
@@ -31,22 +23,13 @@ class TestKNN(unittest.TestCase):
         plt.ylabel('Liters of Ice Cream Consumed Per Week')
 
         label = ['didntLike', 'smallDoses', 'largeDoses']
-<<<<<<< HEAD
         # loc 设置显示的位置，0是自适应
         # ncol 设置显示的列数
-=======
-        # # loc 设置显示的位置，0是自适应
-        # # ncol 设置显示的列数
->>>>>>> 0dd7123256ac67c72ddffa94d2f951a2647dfd7d
         ax.legend(label, loc=0)
         handles, labels = ax.get_legend_handles_labels()
         ax.legend(handles[::-1], labels[::-1])
         plt.show()
 
-<<<<<<< HEAD
-=======
-    @unittest.skip
->>>>>>> 0dd7123256ac67c72ddffa94d2f951a2647dfd7d
     def test_autoNorm(self):
         dating_data_mat, dating_labels = load_data.load_datingTestSet2()
         norm_mat, ranges, min_vals = kNN.autoNorm(dating_data_mat)
@@ -54,10 +37,6 @@ class TestKNN(unittest.TestCase):
         print(ranges)
         print(min_vals)
 
-<<<<<<< HEAD
-=======
-    @unittest.skip
->>>>>>> 0dd7123256ac67c72ddffa94d2f951a2647dfd7d
     def test_datingClassTest(self):
         kNN.datingClassTest()
         # """
@@ -96,17 +75,12 @@ class TestKNN(unittest.TestCase):
         # # 打印输出错误率
         # print('the total error rate is: %f' % (error_count / float(num_test_vecs)))
 
-<<<<<<< HEAD
     def test_classifyPersson(self):
         kNN.classifyPerson()
 
-=======
-    @unittest.skip
     def test_classifyPersson(self):
         kNN.classifyPerson()
 
-    @unittest.skip
->>>>>>> 0dd7123256ac67c72ddffa94d2f951a2647dfd7d
     def test_img2verctor(self):
         import pkg_resources
         filename = pkg_resources.resource_filename(kNN.__name__, 'data/testDigits/0_0.txt')
@@ -115,10 +89,6 @@ class TestKNN(unittest.TestCase):
         for i in range(32):
             print(test_vector[0, 0 + i * 32:31 + i * 32])
 
-<<<<<<< HEAD
-=======
-    @unittest.skip
->>>>>>> 0dd7123256ac67c72ddffa94d2f951a2647dfd7d
     def test_handwritingClassTest(self):
         kNN.handwritingClassTest()
 
