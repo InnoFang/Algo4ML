@@ -139,11 +139,13 @@ def datingClassTest():
     测试代码
     :return: 
     """
+    import pkg_resources
+    filename = pkg_resources.resource_filename(__name__, 'data/datingTestSet2.txt')
     # 用 10% 的数据做是测试样本
     ho_ratio = 0.10
 
     # 获得数据集及标签
-    dating_data_mat, dating_labels = file2matrix('data/datingTestSet2.txt')
+    dating_data_mat, dating_labels = file2matrix(filename)
 
     # 归一化处理，拿到归一化后的数据集，数据变化范围和特征值的最小值向量
     norm_mat, ranges, min_vals = autoNorm(dating_data_mat)
@@ -173,12 +175,15 @@ def datingClassTest():
 
 
 def classifyPerson():
+    import pkg_resources
+    filename = pkg_resources.resource_filename(__name__, 'data/datingTestSet2.txt')
+
     result_list = ['not at all', 'in small does', 'in large does']
     percent_time_ats = float(input('percentage of time spent playing video games?'))
     ff_miles = float(input('frequent flier miles miles earned per year?'))
     ice_cream = float(input('liters of ice cream consumed per year?'))
     # 获得数据集及标签
-    dating_data_mat, dating_labels = file2matrix('data/datingTestSet2.txt')
+    dating_data_mat, dating_labels = file2matrix(filename)
     norm_mat, ranges, min_vals = autoNorm(dating_data_mat)
     in_arr = np.array([ff_miles, percent_time_ats, ice_cream])
     classifier_result = classify0((in_arr - min_vals) / ranges, norm_mat, dating_labels, 3)
@@ -212,11 +217,13 @@ def handwritingClassTest():
     [注] 这里的手写字指的是图片文本，数字从 0 到 9
     :return: 
     """
+    import pkg_resources
+
     # 手写字类别
     hw_labels = []
 
     # 训练样本目录
-    training_file_list = listdir('data/trainingDigits')
+    training_file_list = pkg_resources.resource_listdir(__name__, 'data/trainingDigits')
 
     # 训练样本个数
     m = len(training_file_list)
@@ -237,10 +244,11 @@ def handwritingClassTest():
         hw_labels.append(class_number_str)
 
         # 将训练样本转化为向量
-        training_mat[i, :] = img2vector('data/trainingDigits/%s' % file_name_str)
+        training_mat[i, :] = img2vector(
+            pkg_resources.resource_filename(__name__, 'data/trainingDigits/%s' % file_name_str))
 
     # 测试样本
-    test_file_list = listdir('data/testDigits')
+    test_file_list = pkg_resources.resource_listdir(__name__, 'data/testDigits')
 
     # 错误率
     error_count = 0.0
@@ -255,7 +263,7 @@ def handwritingClassTest():
         class_number_str = int(file_name_str.split('_')[0])
 
         # 将测试样本转化为向量
-        vector_under_test = img2vector('data/testDigits/%s' % file_name_str)
+        vector_under_test = img2vector(pkg_resources.resource_filename(__name__, 'data/testDigits/%s' % file_name_str))
 
         # 识别结果
         classifier_result = classify0(vector_under_test, training_mat, hw_labels, 3)
