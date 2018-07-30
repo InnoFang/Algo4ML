@@ -117,13 +117,3 @@ class RegressionTest(object):
             values_actual.append(self.values[idx])
 
         return values_regr, values_actual
-
-
-def main():
-    regression_test = RegressionTest()
-    regression_test.load_csv_file('data/king_county_data_geocoded.csv', 100)
-    regression_test.plot_error_rates()
-
-
-if __name__ == '__main__':
-    main()

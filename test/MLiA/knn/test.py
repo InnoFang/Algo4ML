@@ -1,4 +1,4 @@
-from MLiA.knn import kNN, load_data
+from MLiA.knn import kNN, dataset
 import matplotlib.pyplot as plt
 import numpy as np
 import unittest
@@ -7,12 +7,12 @@ import unittest
 class TestKNN(unittest.TestCase):
 
     def test_load_data(self):
-        dating_data_mat, dating_labels = load_data.load_datingTestSet2()
+        dating_data_mat, dating_labels = dataset.load_datingTestSet2()
         print(dating_data_mat)
         print(dating_labels[0:20])
 
     def test_data_plot(self):
-        dating_data_mat, dating_labels = load_data.load_datingTestSet2()
+        dating_data_mat, dating_labels = dataset.load_datingTestSet2()
         fig = plt.figure()
         ax = fig.add_subplot(111)
         ax.scatter(dating_data_mat[:, 1], dating_data_mat[:, 2])
@@ -31,7 +31,7 @@ class TestKNN(unittest.TestCase):
         plt.show()
 
     def test_autoNorm(self):
-        dating_data_mat, dating_labels = load_data.load_datingTestSet2()
+        dating_data_mat, dating_labels = dataset.load_datingTestSet2()
         norm_mat, ranges, min_vals = kNN.autoNorm(dating_data_mat)
         print(norm_mat)
         print(ranges)
