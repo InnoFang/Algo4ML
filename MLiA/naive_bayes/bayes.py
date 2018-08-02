@@ -1,4 +1,5 @@
 from numpy import *
+from MLiA.naive_bayes.dataset import load_ham, load_spam
 
 
 def loadDataSet():
@@ -172,11 +173,11 @@ def spamTest():
 
     # 对测试文本数据进行读取，处理，存储
     for i in range(1, 26):
-        word_list = textParse(open('data/spam/%d.txt' % i).read())
+        word_list = textParse(open(load_spam(i)).read())
         doc_list.append(word_list)
         full_text.extend(word_list)
         class_list.append(1)
-        word_list = textParse(open('data/ham/%d.txt' % i, ).read())
+        word_list = textParse(open(load_ham(i)).read())
         doc_list.append(word_list)
         full_text.extend(word_list)
         class_list.append(0)
