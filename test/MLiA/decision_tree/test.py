@@ -2,7 +2,7 @@ from MLiA.decision_tree import trees, treePlotter, dataset
 import unittest
 
 
-class TestDeciseTree(unittest.TestCase):
+class TestDecisionTree(unittest.TestCase):
 
     def test_createDataSet(self):
         # 获得数据集和标签
@@ -74,7 +74,7 @@ class TestDeciseTree(unittest.TestCase):
         print(trees.grabTree('classifierStorage.txt'))
 
     def test_predict_lenses_type(self):
-        fr = dataset.load_lenses()
+        fr = open(dataset.load_lenses())
         lenses = [inst.strip().split('\t') for inst in fr.readlines()]
         lenses_labels = ['age', 'prescript', 'astigmatic', 'tearRate']
         lenses_tree = trees.createTree(lenses, lenses_labels.copy())
