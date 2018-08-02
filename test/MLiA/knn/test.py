@@ -89,4 +89,3 @@ class TestKNN(unittest.TestCase):
     def test_handwritingClassTest(self):
         kNN.handwritingClassTest()
 
- 

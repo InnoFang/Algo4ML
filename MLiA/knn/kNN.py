@@ -2,6 +2,8 @@ import numpy as np
 import operator
 from os import listdir
 
+from MLiA.knn.dataset import *
+
 """
 simple data set
 """
@@ -139,8 +141,7 @@ def datingClassTest():
     测试代码
     :return: 
     """
-    import pkg_resources
-    filename = pkg_resources.resource_filename(__name__, 'data/datingTestSet2.txt')
+    filename = load_datingTestSet2()
     # 用 10% 的数据做是测试样本
     ho_ratio = 0.10
 
@@ -175,8 +176,7 @@ def datingClassTest():
 
 
 def classifyPerson():
-    import pkg_resources
-    filename = pkg_resources.resource_filename(__name__, 'data/datingTestSet2.txt')
+    filename = load_datingTestSet2()
 
     result_list = ['not at all', 'in small does', 'in large does']
     percent_time_ats = float(input('percentage of time spent playing video games?'))
@@ -217,13 +217,12 @@ def handwritingClassTest():
     [注] 这里的手写字指的是图片文本，数字从 0 到 9
     :return: 
     """
-    import pkg_resources
 
     # 手写字类别
     hw_labels = []
 
     # 训练样本目录
-    training_file_list = pkg_resources.resource_listdir(__name__, 'data/trainingDigits')
+    training_file_list = load_trainingDigits_list()
 
     # 训练样本个数
     m = len(training_file_list)
@@ -244,11 +243,10 @@ def handwritingClassTest():
         hw_labels.append(class_number_str)
 
         # 将训练样本转化为向量
-        training_mat[i, :] = img2vector(
-            pkg_resources.resource_filename(__name__, 'data/trainingDigits/%s' % file_name_str))
+        training_mat[i, :] = img2vector(load_trainingDigits(file_name_str))
 
     # 测试样本
-    test_file_list = pkg_resources.resource_listdir(__name__, 'data/testDigits')
+    test_file_list = load_testDigits_list()
 
     # 错误率
     error_count = 0.0
@@ -263,7 +261,7 @@ def handwritingClassTest():
         class_number_str = int(file_name_str.split('_')[0])
 
         # 将测试样本转化为向量
-        vector_under_test = img2vector(pkg_resources.resource_filename(__name__, 'data/testDigits/%s' % file_name_str))
+        vector_under_test = img2vector(load_testDigits(file_name_str))
 
         # 识别结果
         classifier_result = classify0(vector_under_test, training_mat, hw_labels, 3)
