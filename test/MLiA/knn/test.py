@@ -7,12 +7,12 @@ import unittest
 class TestKNN(unittest.TestCase):
 
     def test_load_data(self):
-        dating_data_mat, dating_labels = dataset.load_datingTestSet2()
+        dating_data_mat, dating_labels = kNN.file2matrix(dataset.load_datingTestSet2())
         print(dating_data_mat)
         print(dating_labels[0:20])
 
     def test_data_plot(self):
-        dating_data_mat, dating_labels = dataset.load_datingTestSet2()
+        dating_data_mat, dating_labels = kNN.file2matrix(dataset.load_datingTestSet2())
         fig = plt.figure()
         ax = fig.add_subplot(111)
         ax.scatter(dating_data_mat[:, 1], dating_data_mat[:, 2])
@@ -31,7 +31,7 @@ class TestKNN(unittest.TestCase):
         plt.show()
 
     def test_autoNorm(self):
-        dating_data_mat, dating_labels = dataset.load_datingTestSet2()
+        dating_data_mat, dating_labels = kNN.file2matrix(dataset.load_datingTestSet2())
         norm_mat, ranges, min_vals = kNN.autoNorm(dating_data_mat)
         print(norm_mat)
         print(ranges)
@@ -75,10 +75,7 @@ class TestKNN(unittest.TestCase):
         # # 打印输出错误率
         # print('the total error rate is: %f' % (error_count / float(num_test_vecs)))
 
-    def test_classifyPersson(self):
-        kNN.classifyPerson()
-
-    def test_classifyPersson(self):
+    def test_classifyPerson(self):
         kNN.classifyPerson()
 
     def test_img2verctor(self):

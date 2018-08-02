@@ -5,4 +5,4 @@ resource_package = __name__
 
 def load_datingTestSet2():
     filename = pkg_resources.resource_filename(resource_package, 'data/datingTestSet2.txt')
-    return file2matrix(filename)
+    return filename
