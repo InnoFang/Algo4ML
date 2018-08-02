@@ -21,7 +21,7 @@
 #
 # reg_ex = re.compile('\\W+')
 #
-# email_text = open('email/ham/6.txt').read()
+# email_text = open('data/ham/6.txt').read()
 # list_of_tokens = reg_ex.split(email_text)
 # print(list_of_tokens)
 # for i in range(10):
