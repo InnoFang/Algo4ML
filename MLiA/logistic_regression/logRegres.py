@@ -1,4 +1,5 @@
 import numpy as np
+from MLiA.logistic_regression.dataset import *
 
 
 def loadDataSet():
@@ -8,7 +9,7 @@ def loadDataSet():
     """
     data_mat = []
     label_mat = []
-    with open('data/testSet.txt') as fr:
+    with open(load_testSet()) as fr:
         for line in fr.readlines():
             line_arr = line.strip().split()
             data_mat.append([1.0, float(line_arr[0]), float(line_arr[1])])
@@ -167,8 +168,8 @@ def classifyVector(inX, weights):
 
 
 def colicTest():
-    fr_train = open('data/horseColicTraining.txt')
-    fr_test = open('data/horseColicTest.txt')
+    fr_train = open(load_horseColicTraining())
+    fr_test = open(load_horseColicTest())
     training_set = []
     training_labels = []
     for line in fr_train.readlines():
