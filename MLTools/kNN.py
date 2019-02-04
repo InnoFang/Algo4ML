@@ -26,7 +26,7 @@ class KNNClassifier:
     def predict(self, X_predict):
         assert self._X_train is not None and self._y_train is not None,\
             "The X_train and y_train cannot be None, please fit before predict"
-        assert X_predict.shape[1] == self._X_train[1],\
+        assert X_predict.shape[1] == self._X_train.shape[1],\
             "The number of feature of X_predict must be equal to X_train"
 
         y_predict = [self._predict(x) for x in X_predict]
