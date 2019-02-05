@@ -12,7 +12,7 @@ def train_test_split(X, y, test_ratio=0.2, seed=None):
 
     shuffle_indexes = np.random.permutation(len(X))
 
-    test_size = len(X) * test_ratio
+    test_size = int(len(X) * test_ratio)
     test_indexes = shuffle_indexes[:test_size]
     train_indexes = shuffle_indexes[test_size:]
 
