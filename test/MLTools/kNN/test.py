@@ -35,3 +35,23 @@ class KNNClassifierTest(unittest.TestCase):
         plt.scatter(X_train[y_train == 1, 0], X_train[y_train == 1, 1], color='b')
         plt.scatter(X_train[y_train == 2, 0], X_train[y_train == 2, 1], color='r')
         plt.show()
+
+    def test_find_the_best_k(self):
+        iris = datasets.load_iris()
+        X = iris['data']
+        y = iris['target']
+
+        X_train, y_train, X_test, y_test = train_test_split(X, y)
+
+        best_score = 0.0
+        best_k = -1
+
+        for k in range(1, 11):
+            knn_clf = KNNClassifier(k_neighbours=k)
+            knn_clf.fit(X_train, y_train)
+            score = knn_clf.score(X_test, y_test)
+            if score > best_score:
+                best_score = score
+                best_k = k
+
+        print('The best K is {} and the best score is {}'.format(best_k, best_score))
