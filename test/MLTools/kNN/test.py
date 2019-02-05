@@ -27,8 +27,9 @@ class KNNClassifierTest(unittest.TestCase):
         print(y_predict)
         print(y_test)
 
-        score = accuracy_rate(y_test, y_predict)
-        print(score)
+        # score = accuracy_rate(y_test, y_predict)
+        # print(score)
+        print(knn_clf.score(X_test, y_test))
 
         plt.scatter(X_train[y_train == 0, 0], X_train[y_train == 0, 1], color='g')
         plt.scatter(X_train[y_train == 1, 0], X_train[y_train == 1, 1], color='b')
