@@ -65,12 +65,12 @@ class KNNClassifierTest(unittest.TestCase):
         X_train, y_train, X_test, y_test = train_test_split(X, y)
 
         # print(X_train)
-        std_scaler = StandardScaler()
-        fit = std_scaler.fit(X_train)
+        scaler = StandardScaler()
+        fit = scaler.fit(X_train)
         print(fit)
-        X_train = std_scaler.transform(X_train)
+        X_train = scaler.transform(X_train)
         print(X_train)
 
         # print(X_test)
-        X_test = std_scaler.transform(X_test)
+        X_test = scaler.transform(X_test)
         print(X_test)
