@@ -1,5 +1,6 @@
 from MLTools.kNN import KNNClassifier
 from MLTools.model_selection import train_test_split
+from MLTools.metrics import accuracy_rate
 import unittest
 import numpy as np
 import matplotlib.pyplot as plt
@@ -26,8 +27,8 @@ class KNNClassifierTest(unittest.TestCase):
         print(y_predict)
         print(y_test)
 
-        accuracy_rate = sum(y_test == y_predict) / len(y_test)
-        print(accuracy_rate)
+        score = accuracy_rate(y_test, y_predict)
+        print(score)
 
         plt.scatter(X_train[y_train == 0, 0], X_train[y_train == 0, 1], color='g')
         plt.scatter(X_train[y_train == 1, 0], X_train[y_train == 1, 1], color='b')
