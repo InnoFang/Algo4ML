@@ -10,8 +10,9 @@ class StandardScaler:
     def fit(self, X):
         assert X.ndim == 2, 'The dimension of X must be 2'
 
-        self.mean_ = np.array(np.mean(X[:col]) for col in range(X.shape[1]))
-        self.scale_ = np.array(np.std(X[:col]) for col in range(X.shape[1]))
+        self.mean_ = np.array([np.mean(X[:, col]) for col in range(X.shape[1])])
+        self.scale_ = np.array([np.std(X[:, col]) for col in range(X.shape[1])])
+        return self
 
     def transform(self, X):
         assert X.ndim == 2, 'The dimension of X must be 2'
@@ -22,5 +23,8 @@ class StandardScaler:
 
         resX = np.empty(shape=X.shape, dtype=float)
         for col in range(X.shape[1]):
-            resX[:col] = (X[:col] - self.mean_[col]) / self.scale_[col]
+            resX[:, col] = (X[:, col] - self.mean_[col]) / self.scale_[col]
         return resX
+
+    def __repr__(self):
+        return 'StandardScaler(mean_={}, scale_={})'.format(self.mean_, self.scale_)

@@ -1,6 +1,7 @@
 from MLTools.kNN import KNNClassifier
 from MLTools.model_selection import train_test_split
 from MLTools.metrics import accuracy_rate
+from MLTools.preprocessing import StandardScaler
 import unittest
 import numpy as np
 import matplotlib.pyplot as plt
@@ -27,8 +28,8 @@ class KNNClassifierTest(unittest.TestCase):
         print(y_predict)
         print(y_test)
 
-        # score = accuracy_rate(y_test, y_predict)
-        # print(score)
+        score = accuracy_rate(y_test, y_predict)
+        print(score)
         print(knn_clf.score(X_test, y_test))
 
         plt.scatter(X_train[y_train == 0, 0], X_train[y_train == 0, 1], color='g')
@@ -55,3 +56,21 @@ class KNNClassifierTest(unittest.TestCase):
                 best_k = k
 
         print('The best K is {} and the best score is {}'.format(best_k, best_score))
+
+    def test_StandardScaler(self):
+        iris = datasets.load_iris()
+        X = iris['data']
+        y = iris['target']
+
+        X_train, y_train, X_test, y_test = train_test_split(X, y)
+
+        # print(X_train)
+        std_scaler = StandardScaler()
+        fit = std_scaler.fit(X_train)
+        print(fit)
+        X_train = std_scaler.transform(X_train)
+        print(X_train)
+
+        # print(X_test)
+        X_test = std_scaler.transform(X_test)
+        print(X_test)
