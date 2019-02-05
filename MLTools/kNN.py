@@ -41,3 +41,6 @@ class KNNClassifier:
         topK = [self._y_train[i] for i in nearest[: self._k_neighbours]]
         votes = Counter(topK)
         return votes.most_common(1)[0][0]
+
+    def __repr__(self):
+        return "KNN(k_neighbours={})".format(self._k_neighbours)
