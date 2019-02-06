@@ -1,6 +1,7 @@
 from MLTools.SimpleLinearRegression import SimpleLinearRegression
 from MLTools.metrics import mean_squared_error, root_meas_squared_error, mean_absolute_error
 from MLTools.model_selection import train_test_split
+from MLTools.LinearRegression import  LinearRegression
 import unittest
 import numpy as np
 import matplotlib.pyplot as plt
@@ -9,7 +10,7 @@ from sklearn import datasets
 
 class LinearRegressionTest(unittest.TestCase):
 
-    def test_SimpleLinearRegression41D(self):
+    def test_SimpleLinearRegression(self):
         size = 100
         x = np.random.random(size=size)
         y = 3.0 * x + 5.0 + np.random.normal(size=size)
@@ -22,17 +23,17 @@ class LinearRegressionTest(unittest.TestCase):
         plt.plot(x, y_predict, color='r')
         plt.show()
 
-    def test_MSE_RMSE_MAE(self):
+    def test_MSE_RMSE_MAE_R2(self):
         boston = datasets.load_boston()
         print(boston['feature_names'])
-        x = boston['data'][:, 5]  # Get the `RM`(room) data
+        X = boston['data'][:, 5]  # Get the `RM`(room) data
         y = boston['target']
 
         # clean data
-        x = x[y < 50.0]
+        X = X[y < 50.0]
         y = y[y < 50.0]
 
-        x_train, y_train, x_test, y_test = train_test_split(x, y)
+        x_train, y_train, x_test, y_test = train_test_split(X, y)
 
         regression = SimpleLinearRegression()
         print(regression.fit(x_train, y_train))
@@ -47,5 +48,16 @@ class LinearRegressionTest(unittest.TestCase):
         plt.plot(x_train, regression.predict(x_train), color='r')
         plt.show()
 
+    def test_LinearRegerssion(self):
+        boston = datasets.load_boston()
+        X = boston['data']
+        y = boston['target']
 
+        X = X[y < 50.0]
+        y = y[y < 50.0]
 
+        X_train, y_train, X_test, y_test = train_test_split(X, y)
+
+        regression = LinearRegression()
+        print(regression.fit_normal(X_train, y_train))
+        print('score={}'.format(regression.score(X_test, y_test)))

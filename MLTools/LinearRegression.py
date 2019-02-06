@@ -20,6 +20,7 @@ class LinearRegression:
         """
         assert X_train.shape[0] == y_train.shape[0],\
             'The size of X_train must be equal to the size of y_train'
+
         X_b = np.hstack([np.ones((len(X_train), 1)), X_train])
         self._theta = np.linalg.inv(X_b.T.dot(X_b)).dot(X_b.T).dot(y_train)
         self.intercept_ = self._theta[0]
@@ -29,7 +30,7 @@ class LinearRegression:
     def predict(self, X_predict):
         assert self.coefficients_ is not None and self.intercept_ is not None,\
             'Please fit_normal before predict'
-        assert X_predict.shape[0] == len(self.coefficients_),\
+        assert X_predict.shape[1] == len(self.coefficients_),\
             'The number of features of X_test must be equal to X_train'
 
         X_b = np.hstack([np.ones((len(X_predict), 1)), X_predict])
