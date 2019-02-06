@@ -14,11 +14,11 @@ class SimpleLinearRegression41D:
             'The length of X_train must be equal to the size of y_train'
 
         """
-             Σ(x_i - x_hat)(y_i - y_hat)
+             Σ(x_i - x_mean)(y_i - y_mean)
         a = -----------------------------
-             Σ(x_i - x_hat)^2
+             Σ(x_i - x_mean)^2
              
-        b = y_hat - a·x_hat
+        b = y_mean - a·x_mean
         
         """
 
@@ -52,7 +52,6 @@ class SimpleLinearRegression41D:
     def score(self, x_test, y_test):
         y_predict = self.predict(x_test)
         return r2_score(y_test, y_predict)
-
 
     def __repr__(self):
         return 'SimpleLinearRegression41D(a={}, b={})'.format(self.a_, self.b_)
