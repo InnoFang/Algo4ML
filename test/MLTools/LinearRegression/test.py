@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 class LinearRegressionTest(unittest.TestCase):
 
     def test_SimpleLinearRegression41D(self):
-        size = 10
+        size = 100
         x = np.random.random(size=size)
         y = 3.0 * x + 5.0 + np.random.normal(size=size)
 
