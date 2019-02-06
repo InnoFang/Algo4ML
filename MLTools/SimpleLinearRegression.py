@@ -24,12 +24,16 @@ class SimpleLinearRegression41D:
         x_mean = np.mean(x_train)
         y_mean = np.mean(y_train)
 
-        molecule = 0.0
-        denominator = 0.0
+        # molecule = 0.0
+        # denominator = 0.0
+        #
+        # for x_i, y_i in zip(x_train, y_train):
+        #     molecule += (x_i - x_mean) * (y_i - y_mean)
+        #     denominator += (x_i - x_mean) ** 2
 
-        for x_i, y_i in zip(x_train, y_train):
-            molecule += (x_i - x_mean) * (y_i - y_mean)
-            denominator += (x_i - x_mean) ** 2
+        # Vectorization
+        molecule = (x_train - x_mean).dot(y_train - y_mean)
+        denominator = (x_train - x_mean).dot(x_train - x_mean)
 
         self.a_ = molecule / denominator
         self.b_ = y_mean - self.a_ * x_mean
