@@ -1,4 +1,4 @@
-from MLTools.SimpleLinearRegression import SimpleLinearRegression41D
+from MLTools.SimpleLinearRegression import SimpleLinearRegression
 from MLTools.metrics import mean_squared_error, root_meas_squared_error, mean_absolute_error
 from MLTools.model_selection import train_test_split
 import unittest
@@ -14,7 +14,7 @@ class LinearRegressionTest(unittest.TestCase):
         x = np.random.random(size=size)
         y = 3.0 * x + 5.0 + np.random.normal(size=size)
 
-        regression = SimpleLinearRegression41D()
+        regression = SimpleLinearRegression()
         print(regression.fit(x, y))
         y_predict = regression.predict(x)
 
@@ -34,7 +34,7 @@ class LinearRegressionTest(unittest.TestCase):
 
         x_train, y_train, x_test, y_test = train_test_split(x, y)
 
-        regression = SimpleLinearRegression41D()
+        regression = SimpleLinearRegression()
         print(regression.fit(x_train, y_train))
         y_predict = regression.predict(x_test)
 

@@ -2,7 +2,7 @@ import numpy as np
 from .metrics import r2_score
 
 
-class SimpleLinearRegression41D:
+class SimpleLinearRegression:
 
     def __init__(self):
         self.a_ = None
