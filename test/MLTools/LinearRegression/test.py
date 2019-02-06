@@ -7,8 +7,9 @@ import matplotlib.pyplot as plt
 class LinearRegressionTest(unittest.TestCase):
 
     def test_SimpleLinearRegression41D(self):
-        x = np.array([1, 2, 3, 4, 5], dtype=float)
-        y = np.array([1, 3, 2, 3, 5], dtype=float)
+        size = 10
+        x = np.random.random(size=size)
+        y = 3.0 * x + 5.0 + np.random.normal(size=size)
 
         regression = SimpleLinearRegression41D()
         print(regression.fit(x, y))
