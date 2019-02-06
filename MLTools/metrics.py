@@ -52,3 +52,19 @@ def mean_absolute_error(y_true, y_predict):
         'The size of y_true must be equal to the size of y_predict'
 
     return np.sum(np.absolute(y_true - y_predict)) / len(y_true)
+
+
+def r2_score(y_true, y_predict):
+    """
+    :param y_true:    the real result
+    :param y_predict: the predict result
+    :return: R^2
+                Σ (y_hat - y_i)^2            Σ (y_hat - y_i)^2  / m           MSE(y_hat, y)
+    R^2 = 1 - ---------------------- = 1 - --------------------------- = 1 - ---------------
+                Σ (y_mean - y_i)^2           Σ (y_mean - y_i)^2 / m              VAR(y)
+
+    """
+    assert len(y_true) == len(y_predict), \
+        'The size of y_true must be equal to the size of y_predict'
+
+    return 1 - mean_squared_error(y_true, y_predict) / np.var(y_true)

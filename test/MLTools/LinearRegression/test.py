@@ -41,6 +41,7 @@ class LinearRegressionTest(unittest.TestCase):
         print(mean_squared_error(y_test, y_predict))
         print(root_meas_squared_error(y_test, y_predict))
         print(mean_absolute_error(y_test, y_predict))
+        print(regression.score(x_test, y_test))
 
         plt.scatter(x_train, y_train)
         plt.plot(x_train, regression.predict(x_train), color='r')

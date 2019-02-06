@@ -1,4 +1,5 @@
 import numpy as np
+from .metrics import r2_score
 
 
 class SimpleLinearRegression41D:
@@ -47,6 +48,11 @@ class SimpleLinearRegression41D:
 
     def _predict(self, x_single):
         return self.a_ * x_single + self.b_
+
+    def score(self, x_test, y_test):
+        y_predict = self.predict(x_test)
+        return r2_score(y_test, y_predict)
+
 
     def __repr__(self):
         return 'SimpleLinearRegression41D(a={}, b={})'.format(self.a_, self.b_)
