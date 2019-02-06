@@ -12,7 +12,7 @@ class LinearRegressionTest(unittest.TestCase):
 
         regression = SimpleLinearRegression41D()
         print(regression.fit(x, y))
-        y_predict = regression.transform(x)
+        y_predict = regression.predict(x)
 
         plt.scatter(x, y)
         plt.plot(x, y_predict, color='r')

@@ -35,8 +35,10 @@ class SimpleLinearRegression41D:
         self.b_ = y_mean - self.a_ * x_mean
         return self
 
-    def transform(self, x_predict):
+    def predict(self, x_predict):
         assert x_predict.ndim == 1, 'The dimension of X_predict must be 1'
+        assert self.a_ is not None and self.b_ is not None,\
+            'Please fit before transform'
         return np.array([self._predict(x) for x in x_predict])
 
     def _predict(self, x_single):
