@@ -40,6 +40,43 @@ class LinearRegression:
         y_predict = self.predict(X_test)
         return r2_score(y_test, y_predict)
 
+    def fit_gradient_descent(self, X_train, y_train, eta=0.01, n_iters=1e4):
+        """Gradient Descent"""
+        assert X_train.shape[0] == y_train.shape[0],\
+            'The size of X must be equal to the size of y'
+
+        def J(y, X_b, theta):
+            return np.sum((y - X_b.dot(theta)) ** 2) / len(y)
+
+        def dJ(y, X_b, theta):
+            res = np.empty(len(theta))
+            res[0] = np.sum(X_b.dot(theta) - y)
+            for i in range(1, len(theta)):
+                res[i] = (X_b.dot(theta) - y).dot(X_b[:, i])
+            return res * 2 / len(X_b)
+
+        def gradient_descent(X_b, y, initial_theta, epsilon=1e-8):
+            theta = initial_theta
+            i_iter = 0
+
+            while i_iter < n_iters:
+                gradient = dJ(y, X_b, theta)
+                last_theta = theta
+                theta = y - eta * gradient
+                if abs(J(y, X_b, last_theta) - J(y, X_b, theta)) < epsilon:
+                    break
+                i_iter += 1
+
+            return theta
+
+        X_b = np.hstack([np.ones((len(X), 1)), X_train])
+        initial_theta = np.zeros(X_b.shape[1])
+        self._theta = gradient_descent(X_b, y_train, initial_theta)
+
+        self.intercept_ = self._theta[0]
+        self.coefficients_ = self._theta[1:]
+        return self
+
     def __repr__(self):
         return "LinearRegression(conffiecietns={}, intercept={}"\
             .format(self.coefficients_, self.intercept_)
