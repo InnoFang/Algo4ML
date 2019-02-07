@@ -51,11 +51,18 @@ class LinearRegression:
                 return float('inf')
 
         def dJ(y, X_b, theta):
-            res = np.empty(len(theta))
-            res[0] = np.sum(X_b.dot(theta) - y)
-            for i in range(1, len(theta)):
-                res[i] = (X_b.dot(theta) - y).dot(X_b[:, i])
-            return res * 2 / len(X_b)
+            # res = np.empty(len(theta))
+            # res[0] = np.sum(X_b.dot(theta) - y)
+            # for i in range(1, len(theta)):
+            #     res[i] = (X_b.dot(theta) - y).dot(X_b[:, i])
+            # return res * 2 / len(X_b)
+            """
+
+            2                         2
+            - · (X_b·θ - y)^T · X_b = - · X_b^T · (X_b·θ - y)
+            m                         m
+            """
+            return 2.0 * X_b.T.dot(X_b.dot(theta) - y) / len(X_b)
 
         def gradient_descent(y, X_b, initial_theta, epsilon=1e-8):
             theta = initial_theta
