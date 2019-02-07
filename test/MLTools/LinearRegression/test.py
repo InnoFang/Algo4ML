@@ -81,3 +81,23 @@ class LinearRegressionTest(unittest.TestCase):
         lin_reg = LinearRegression()
         lin_reg.fit_gradient_descent(X_train_standard, y_train)
         print(lin_reg.score(X_test_standard, y_test))
+
+    def test_stochastic_gradient_descent(self):
+        boston = datasets.load_boston()
+        X = boston['data']
+        y = boston['target']
+
+        X = X[y < 50.0]
+        y = y[y < 50.0]
+
+        X_train, y_train, X_test, y_test = train_test_split(X, y)
+
+        scaler = StandardScaler()
+        scaler.fit(X_train)
+        X_train_standard = scaler.transform(X_train)
+        X_test_standard = scaler.transform(X_test)
+
+        lin_reg = LinearRegression()
+        lin_reg.fit_stochastic_gradient_descent(X_train_standard, y_train)
+        print(lin_reg.score(X_test_standard, y_test))
+

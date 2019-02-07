@@ -64,6 +64,16 @@ class LinearRegression:
             """
             return 2.0 * X_b.T.dot(X_b.dot(theta) - y) / len(X_b)
 
+        def dJ_debug(y, X_b, theta, epsilon=0.01):
+            res = np.empty(len(theta))
+            for i in range(len(theta)):
+                theta_1 = theta.copy()
+                theta_2 = theta.copy()
+                theta_1 += epsilon
+                theta_2 -= epsilon
+                res[i] = (J(y, X_b, theta_1) - J(y, X_b, theta_2)) / (w * epsilon)
+            return res
+
         def gradient_descent(y, X_b, initial_theta, epsilon=1e-8):
             theta = initial_theta
             i_iter = 0
@@ -103,6 +113,7 @@ class LinearRegression:
             theta = initial_theta
             size = len(X_b)
 
+            # 至少每个标签都要跑一遍
             for cur_iter in range(n_iters):
                 indexes = np.random.permutation(size)
                 X_b_new = X_b[indexes]
@@ -112,9 +123,9 @@ class LinearRegression:
                     theta = theta - learning_rate(cur_iter * size + i) * gradient
             return theta
 
-        X_b = np.hstack([np.ones((len(X), 1)), X])
+        X_b = np.hstack([np.ones((len(X_train), 1)), X_train])
         initial_theta = np.zeros(X_b.shape[1])
-        self._theta = stochastic_gradient_descent(y, X_b, initial_theta, n_iters, t0, t1)
+        self._theta = stochastic_gradient_descent(y_train, X_b, initial_theta, n_iters, t0, t1)
 
         self.intercept_ = self._theta[0]
         self.coefficients_ = self._theta[1:]
