@@ -86,6 +86,40 @@ class LinearRegression:
         self.coefficients_ = self._theta[1:]
         return self
 
+    def fit_stochastic_gradient_descent(self, X_train, y_train, n_iters=5, t0=5, t1=50):
+
+        assert X_train.shape[0] == y_train.shape[0],\
+            'The size of X_train must be equal to the size of y_train'
+        assert n_iters >= 1, 'n_iter must bigger than one'
+
+        def dJ_sgd(y_i, X_b_i, theta):
+            return 2.0 * X_b_i.T.dot(X_b_i.dot(theta) - y_i)
+
+        def stochastic_gradient_descent(y, X_b, initial_theta, n_iters, t0=5, t1=50):
+
+            def learning_rate(t):
+                return t0 / (t1 + t)
+
+            theta = initial_theta
+            size = len(X_b)
+
+            for cur_iter in range(n_iters):
+                indexes = np.random.permutation(size)
+                X_b_new = X_b[indexes]
+                y_new = y[indexes]
+                for i in range(size):
+                    gradient = dJ_sgd(y_new[i], X_b_new[i], theta)
+                    theta = theta - learning_rate(cur_iter * size + i) * gradient
+            return theta
+
+        X_b = np.hstack([np.ones((len(X), 1)), X])
+        initial_theta = np.zeros(X_b.shape[1])
+        self._theta = stochastic_gradient_descent(y, X_b, initial_theta, n_iters, t0, t1)
+
+        self.intercept_ = self._theta[0]
+        self.coefficients_ = self._theta[1:]
+        return self
+
     def __repr__(self):
         return "LinearRegression(conffiecietns={}, intercept={}"\
             .format(self.coefficients_, self.intercept_)

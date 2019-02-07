@@ -1,7 +1,8 @@
 from MLTools.SimpleLinearRegression import SimpleLinearRegression
 from MLTools.metrics import mean_squared_error, root_meas_squared_error, mean_absolute_error
 from MLTools.model_selection import train_test_split
-from MLTools.LinearRegression import  LinearRegression
+from MLTools.LinearRegression import LinearRegression
+from MLTools.preprocessing import StandardScaler
 import unittest
 import numpy as np
 import matplotlib.pyplot as plt
@@ -63,11 +64,20 @@ class LinearRegressionTest(unittest.TestCase):
         print('score={}'.format(regression.score(X_test, y_test)))
 
     def test_gradient_descent(self):
-        size = 1000
-        x = np.random.random(size)
-        y = 3.0 * x + 5.0 + np.random.normal(size)
+        boston = datasets.load_boston()
+        X = boston['data']
+        y = boston['target']
 
-        X = x.reshape((-1, 1))
+        X = X[y < 50.0]
+        y = y[y < 50.0]
+
+        X_train, y_train, X_test, y_test = train_test_split(X, y)
+
+        scaler = StandardScaler()
+        scaler.fit(X_train)
+        X_train_standard = scaler.transform(X_train)
+        X_test_standard = scaler.transform(X_test)
 
         lin_reg = LinearRegression()
-        print(lin_reg.fit_gradient_descent(X, y))
+        lin_reg.fit_gradient_descent(X_train_standard, y_train)
+        print(lin_reg.score(X_test_standard, y_test))
