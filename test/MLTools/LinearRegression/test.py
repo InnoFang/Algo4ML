@@ -61,3 +61,13 @@ class LinearRegressionTest(unittest.TestCase):
         regression = LinearRegression()
         print(regression.fit_normal(X_train, y_train))
         print('score={}'.format(regression.score(X_test, y_test)))
+
+    def test_gradient_descent(self):
+        size = 1000
+        x = np.random.random(size)
+        y = 3.0 * x + 5.0 + np.random.normal(size)
+
+        X = x.reshape((-1, 1))
+
+        lin_reg = LinearRegression()
+        print(lin_reg.fit_gradient_descent(X, y))
