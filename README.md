@@ -15,7 +15,5 @@
  + Machine Leanrning in Action 
  + [Thoughtful Machine Learning with Python: A Test-Driven Approach](https://github.com/thoughtfulml/examples-in-python)
  + [leanrn_dl](https://github.com/hanbt/learn_dl)  
- + [MachineLearning](https://github.com/apachecn/MachineLearning) 
- + [100-Days-Of-ML-Code](https://github.com/Avik-Jain/100-Days-Of-ML-Code) 
- + [100-Days-Of-ML-Code](https://github.com/MLEveryday/100-Days-Of-ML-Code) (Simple Chinese)
+ + [MachineLearning](https://github.com/apachecn/MachineLearning)  
  + [Play-with-Machine-Learning-Algorithms](https://github.com/liuyubobobo/Play-with-Machine-Learning-Algorithms)
