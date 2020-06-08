@@ -8,7 +8,7 @@
  + [x] decision tree
  + [x] naive bayes
  + [x] logisitic regression
- + [ ] svm
+ + [x] svm
 
 # Reference
 
