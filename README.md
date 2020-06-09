@@ -4,11 +4,12 @@
 
 <br />
 
- + [x] knn
- + [x] decision tree
- + [x] naive bayes
- + [x] logisitic regression
- + [x] svm
+ + [x] kNN
+ + [x] Decision Tree
+ + [x] Naive Bayes
+ + [x] Logistic Regression
+ + [x] SVM
+ + [ ] AdaBoost
 
 # Reference
 
