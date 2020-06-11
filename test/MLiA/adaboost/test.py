@@ -18,3 +18,9 @@ class TestAdaBoost(unittest.TestCase):
         plt.scatter(negative_axis[:, 0], negative_axis[:, 1], s=150, marker='^', c="red")
         plt.plot()
         plt.show()
+
+    def test_buildStump(self):
+        data_matrix, class_labels = adaboost.loadSimpleData()
+        D = np.array(np.ones((5, 1)) / 5)
+        adaboost.buildStump(data_matrix, class_labels, D)
+
