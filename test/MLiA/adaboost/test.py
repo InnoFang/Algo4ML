@@ -28,3 +28,8 @@ class TestAdaBoost(unittest.TestCase):
         data_matrix, class_labels = adaboost.loadSimpleData()
         adaboost.adaBoostTrainDS(data_matrix, class_labels, 9)
 
+    def test_adaClassify(self):
+        data_arr, label_arr = adaboost.loadSimpleData()
+        classifier_arr = adaboost.adaBoostTrainDS(data_arr, label_arr, 30)
+        result = adaboost.adaClassify([[5, 5], [0, 0]], classifier_arr)
+        print(result)

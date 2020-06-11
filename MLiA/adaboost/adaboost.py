@@ -15,6 +15,20 @@ def loadSimpleData():
     return data_matrix, class_labels
 
 
+def loadDataSet(fileName):
+    num_feat = len(open(fileName).readline().split('\t'))
+    data_mat, label_mat = [], []
+    fr = open(fileName)
+    for line in fr.readlines():
+        line_arr = []
+        cur_line = line.strip().split('\t')
+        for i in range(num_feat - 1):
+            line_arr.append(float(cur_line[i]))
+        data_mat.append(line_arr)
+        label_mat.append(float(cur_line[-1]))
+    return data_mat, label_mat
+
+
 def stumpClassify(data_matrix, dimen, threshVal, threshIneq):
     """
     检测是否有某个值小于或者大于正在测试的阈值，通过阈值比较对数据进行分类
@@ -86,13 +100,17 @@ def adaBoostTrainDS(dataArr, classLabels, numIt=40):
     for i in range(numIt):
         best_stump, error, class_est = buildStump(dataArr, classLabels, D)
         print("D:", D.T)
+        # 计算alpha，用于告诉总分类器本次单层决策树输出结果的权重
+        # max(error, 1e-16) 用于确保在没有错误时不会发生除零溢出
         alpha = float(0.5 * np.log((1.0 - error) / max(error, 1e-16)))
         best_stump['alpha'] = alpha
         weak_class_arr.append(best_stump)
         print("class_est:", class_est.T)
         expon = np.multiply(-1 * alpha * np.mat(classLabels).T, class_est)
+        # 为下一次迭代计算 D
         D = np.multiply(D, np.exp(expon))
         D = D / D.sum()
+        # 错误率累加计算，错误率为 0 时中止循环
         agg_class_est += alpha * class_est
         print("agg_class_est:", agg_class_est.T)
         agg_errors = np.multiply(np.sign(agg_class_est) != np.mat(classLabels).T, np.ones((m, 1)))
@@ -102,3 +120,15 @@ def adaBoostTrainDS(dataArr, classLabels, numIt=40):
             break
     return weak_class_arr
 
+
+def adaClassify(datToClass, classifierArr):
+    data_matrix = np.mat(datToClass)
+    m = np.shape(data_matrix)[0]
+    agg_class_est = np.mat(np.zeros((m, 1)))
+    for i in range(len(classifierArr)):
+        class_est = stumpClassify(data_matrix, classifierArr[i]['dim'],
+                                  classifierArr[i]['thresh'],
+                                  classifierArr[i]['ineq'])
+        agg_class_est += classifierArr[i]['alpha'] * class_est
+        print(agg_class_est)
+    return np.sign(agg_class_est)
