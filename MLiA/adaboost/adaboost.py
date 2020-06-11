@@ -42,7 +42,9 @@ def buildStump(dataArr, classLabels, D):
     """
     data_matrix, label_mat = np.mat(dataArr), np.mat(classLabels).T
     m, n = np.shape(data_matrix)
+    # 用于在特征的所有可能值上进行遍历
     num_steps = 10.0
+    # 用于存储给定权重向量D时所得到的最佳单层决策树的相关信息
     best_stump = {}
     best_class_est = np.mat(np.zeros((m, 1)))
     # 将最小错误率 min_error 设为 +∞
@@ -64,7 +66,8 @@ def buildStump(dataArr, classLabels, D):
                 # 计算加权错误率
                 weighted_error = D.T * err_arr
                 # 如果错误率低于 minError，则将当前单层决策树设为最佳单层决策树
-                print("split: dim %d, thresh %.2f, thresh ineqal: %s, the weighted error is %.3f" % (i, thresh_val, inequal, weighted_error))
+                print("split: dim %d, thresh %.2f, thresh ineqal: %s, the weighted error is %.3f" % (
+                    i, thresh_val, inequal, weighted_error))
                 if weighted_error < min_error:
                     min_error = weighted_error
                     best_class_est = predicted_vals.copy()
@@ -73,3 +76,29 @@ def buildStump(dataArr, classLabels, D):
                     best_stump['ineq'] = inequal
     # 返回最佳单层决策树
     return best_stump, min_error, best_class_est
+
+
+def adaBoostTrainDS(dataArr, classLabels, numIt=40):
+    weak_class_arr = []
+    m = np.shape(dataArr)[0]
+    D = np.mat(np.ones((m, 1)) / m)
+    agg_class_est = np.mat(np.zeros((m, 1)))
+    for i in range(numIt):
+        best_stump, error, class_est = buildStump(dataArr, classLabels, D)
+        print("D:", D.T)
+        alpha = float(0.5 * np.log((1.0 - error) / max(error, 1e-16)))
+        best_stump['alpha'] = alpha
+        weak_class_arr.append(best_stump)
+        print("class_est:", class_est.T)
+        expon = np.multiply(-1 * alpha * np.mat(classLabels).T, class_est)
+        D = np.multiply(D, np.exp(expon))
+        D = D / D.sum()
+        agg_class_est += alpha * class_est
+        print("agg_class_est:", agg_class_est.T)
+        agg_errors = np.multiply(np.sign(agg_class_est) != np.mat(classLabels).T, np.ones((m, 1)))
+        error_rate = agg_errors.sum() / m
+        print("total error:", error_rate)
+        if error_rate == 0.0:
+            break
+    return weak_class_arr
+

@@ -24,3 +24,7 @@ class TestAdaBoost(unittest.TestCase):
         D = np.array(np.ones((5, 1)) / 5)
         adaboost.buildStump(data_matrix, class_labels, D)
 
+    def test_adaBoostTrainDS(self):
+        data_matrix, class_labels = adaboost.loadSimpleData()
+        adaboost.adaBoostTrainDS(data_matrix, class_labels, 9)
+
