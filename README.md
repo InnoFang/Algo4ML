@@ -9,8 +9,8 @@
  + [x] Naive Bayes
  + [x] Logistic Regression
  + [x] SVM
- + [ ] AdaBoost
-
+ + [x] AdaBoost
+ + [ ] Linear Regression
 # Reference
 
  + Machine Leanrning in Action 
