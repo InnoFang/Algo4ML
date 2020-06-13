@@ -14,5 +14,5 @@ def standRegress(xArr, yArr):
     if np.linalg.det(xTx) == 0.0:
         print("This matrix is singular, cannot do inverse")
         return
-    ws = xTx.I * (x_mat * y_mat)
+    ws = xTx.I * (x_mat.T * y_mat)
     return ws
