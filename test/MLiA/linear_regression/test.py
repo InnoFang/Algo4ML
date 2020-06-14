@@ -60,5 +60,35 @@ class TestLinearRegression(unittest.TestCase):
 
         plt.show()
 
+    def test_predictTheAgeOfAnAbalone(self):
+        """
+        预测鲍鱼(abalone)的年龄
+        abalone 数据集：0-99训练集，100-199测试集
+        :return:
+        """
+        ab_x, ab_y = dataset.load_abalone()
+        y_hat01 = regression.lwlrTest(ab_x[0:99], ab_x[0:99], ab_y[0:99], 0.1)
+        y_hat1 = regression.lwlrTest(ab_x[0:99], ab_x[0:99], ab_y[0:99], 1)
+        y_hat10 = regression.lwlrTest(ab_x[0:99], ab_x[0:99], ab_y[0:99], 10)
 
+        # 为了分析预测误差的大小，使用 rssError() 计算出这一指标
+        print(regression.rssError(ab_y[0:99], y_hat01.T))
+        print(regression.rssError(ab_y[0:99], y_hat1.T))
+        print(regression.rssError(ab_y[0:99], y_hat10.T))
+        # 根据以上输出可以发现较小的核将得到较低的误差，但使用过小的核会造成过拟合，对新数据不一定能达到最好的预测效果
 
+        # 测试在新数据上的表现
+        y_hat01 = regression.lwlrTest(ab_x[100:199], ab_x[0:99], ab_y[0:99], 0.1)
+        print(regression.rssError(ab_y[0:99], y_hat01.T))
+        y_hat1 = regression.lwlrTest(ab_x[100:199], ab_x[0:99], ab_y[0:99], 1)
+        print(regression.rssError(ab_y[0:99], y_hat1.T))
+        y_hat10 = regression.lwlrTest(ab_x[100:199], ab_x[0:99], ab_y[0:99], 10)
+        print(regression.rssError(ab_y[0:99], y_hat10.T))
+        # 根据以上输出会发现和大小等于10时的测试误差最小，但在训练集上的误差确实最大的
+
+        # 接下来再与简单的线性回归做个比较
+        ws = regression.standRegress(ab_x[0:99], ab_y[0:99])
+        y_hat = np.mat(ab_x[100:199]) * ws
+        print(regression.rssError(ab_y[100:199], y_hat.T.A))
+        # 简单线性回归达到了与局部加权线性回归类似的效果。这表明一点，必须在未知数据上比较效果才能选取到最佳模型
+        # 如果要得到更好的效果，应该对多个不同的数据集做多次测试来比较结果
