@@ -55,3 +55,13 @@ def lwlrTest(testArr, xArr, yArr, k=1.0):
     for i in range(m):
         y_hat[i] = lwlr(testArr[i], xArr, yArr, k)
     return y_hat
+
+
+def rssError(yArr, yHatArr):
+    """
+    用于分析预测误差的大小
+    :param yArr:
+    :param yHatArr:
+    :return:
+    """
+    return ((yArr - yHatArr) ** 2).sum()
