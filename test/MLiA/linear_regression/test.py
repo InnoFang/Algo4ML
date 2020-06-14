@@ -34,18 +34,30 @@ class TestLinearRegression(unittest.TestCase):
         print(regression.lwlr(x_arr[0], x_arr, y_arr, 1.0))
         print(regression.lwlr(x_arr[0], x_arr, y_arr, 0.001))
 
-        # 对所有点进行估计
-        y_hat = regression.lwlrTest(x_arr, x_arr, y_arr, 0.003)
-
-        # 查看 y_hat 的拟合效果
+        # 对所有点进行估计（依据不同 k 值），并查看对应 y_hat 的拟合效果
         x_mat = np.mat(x_arr)
         srt_ind = x_mat[:, 1].argsort(0)
         x_sort = x_mat[srt_ind][:, 0, :]
 
         fig = plt.figure()
-        ax = fig.add_subplot(111)
+        ax = fig.add_subplot(221)
+        # k=1.0，拟合效果与最小二乘的拟合效果差不多
+        y_hat = regression.lwlrTest(x_arr, x_arr, y_arr, 1.0)
         ax.plot(x_sort[:, 1], y_hat[srt_ind])
         ax.scatter(x_mat[:, 1].flatten().A[0], np.mat(y_arr).T.flatten().A[0], s=2, c='red')
+
+        ax = fig.add_subplot(222)
+        # k=0.01，根据拟合效果可以挖出数据的潜在规律
+        y_hat = regression.lwlrTest(x_arr, x_arr, y_arr, 0.01)
+        ax.plot(x_sort[:, 1], y_hat[srt_ind])
+        ax.scatter(x_mat[:, 1].flatten().A[0], np.mat(y_arr).T.flatten().A[0], s=2, c='red')
+
+        ax = fig.add_subplot(223)
+        # k=0.003，考虑了过多的噪声，进而导致出现过拟合现象
+        y_hat = regression.lwlrTest(x_arr, x_arr, y_arr, 0.003)
+        ax.plot(x_sort[:, 1], y_hat[srt_ind])
+        ax.scatter(x_mat[:, 1].flatten().A[0], np.mat(y_arr).T.flatten().A[0], s=2, c='red')
+
         plt.show()
 
 
