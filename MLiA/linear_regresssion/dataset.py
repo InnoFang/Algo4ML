@@ -28,3 +28,8 @@ def load_ex0():
 def load_ex1():
     filename = pkg_resources.resource_filename(resource_package, 'data/ex1.txt')
     return loadDataSet(filename)
+
+
+def load_abalone():
+    filename = pkg_resources.resource_filename(resource_package, 'data/abalone.txt')
+    return loadDataSet(filename)
