@@ -25,3 +25,28 @@ class TestLinearRegression(unittest.TestCase):
         y_hat = x_copy * ws
         ax.plot(x_copy[:, 1], y_hat)
         plt.show()
+
+    def test_lwlr(self):
+        import matplotlib.pyplot as plt
+
+        x_arr, y_arr = dataset.load_ex0()
+        # 对单点进行估计
+        print(regression.lwlr(x_arr[0], x_arr, y_arr, 1.0))
+        print(regression.lwlr(x_arr[0], x_arr, y_arr, 0.001))
+
+        # 对所有点进行估计
+        y_hat = regression.lwlrTest(x_arr, x_arr, y_arr, 0.003)
+
+        # 查看 y_hat 的拟合效果
+        x_mat = np.mat(x_arr)
+        srt_ind = x_mat[:, 1].argsort(0)
+        x_sort = x_mat[srt_ind][:, 0, :]
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        ax.plot(x_sort[:, 1], y_hat[srt_ind])
+        ax.scatter(x_mat[:, 1].flatten().A[0], np.mat(y_arr).T.flatten().A[0], s=2, c='red')
+        plt.show()
+
+
+
