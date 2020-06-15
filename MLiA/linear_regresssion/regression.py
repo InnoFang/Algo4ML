@@ -86,7 +86,7 @@ def ridgeRegress(xMat, yMat, lam=0.2):
 
 
 def ridgeTest(xArr, yArr):
-    x_mat, y_mat = np.mat(xArr), np.mat(yArr)
+    x_mat, y_mat = np.mat(xArr), np.mat(yArr).T
     y_mean = np.mean(y_mat, 0)
     y_mat = y_mat - y_mean
     x_means = np.mean(x_mat, 0)
@@ -99,3 +99,53 @@ def ridgeTest(xArr, yArr):
         ws = ridgeRegress(x_mat, y_mat, np.exp(i - 10))
         w_mat[i, :] = ws.T
     return w_mat
+
+
+def regularize(xMat):  # regularize by columns
+    in_mat = xMat.copy()
+    in_means = np.mean(in_mat, 0)  # calc mean then subtract it off
+    in_var = np.var(in_mat, 0)  # calc variance of Xi then divide by it
+    in_mat = (in_mat - in_means) / in_var
+    return in_mat
+
+
+def stageWise(xArr, yArr, eps=0, numIt=100):
+    """
+
+    :param xArr: 输入数据
+    :param yArr: 预测变量
+    :param eps: 每次迭代需要调整的步长
+    :param numIt: 迭代次数
+    :return:
+    """
+    x_mat, y_mat = np.mat(xArr), np.mat(yArr).T
+    y_mean = np.mean(y_mat, 0)
+    y_mat = y_mat - y_mean
+    # 把特征按照均值为 0 方差为 1 进行标准化处理
+    x_mat = regularize(x_mat)
+    m, n = np.shape(x_mat)
+    return_mat = np.zeros((numIt, n))
+    ws = np.zeros((n, 1))
+    ws_test, ws_max = ws.copy(), ws.copy()
+    for i in range(numIt):
+        print(ws.T)
+        # 设置当前最小误差 lowest_error 为正无穷
+        lowest_error = np.inf
+        # 对每个特征
+        for j in range(n):
+            # 增大或缩小
+            for sign in [-1, 1]:
+                # 改变一个系数得到一个新的 w
+                ws_test = ws.copy()
+                ws_test[j] += eps * sign
+                # 计算新 w 下的误差
+                y_test = x_mat * ws_test
+                rss_error = rssError(y_mat.A, y_test.A)
+                # 如果误差 rss_error 小于当前最小误差 lowestError：设置 ws_max 等于当前的 w
+                if rss_error < lowest_error:
+                    lowest_error = rss_error
+                    ws_max = ws_test
+        # 将 w 设置为 新的 ws_max
+        ws = ws_max.copy()
+        return_mat[i, :] = ws.T
+    return return_mat
