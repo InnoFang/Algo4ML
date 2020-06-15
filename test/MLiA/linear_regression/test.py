@@ -1,5 +1,6 @@
 import numpy as np
 import unittest
+import matplotlib.pyplot as plt
 from MLiA.linear_regresssion import dataset, regression
 
 
@@ -27,8 +28,6 @@ class TestLinearRegression(unittest.TestCase):
         plt.show()
 
     def test_lwlr(self):
-        import matplotlib.pyplot as plt
-
         x_arr, y_arr = dataset.load_ex0()
         # 对单点进行估计
         print(regression.lwlr(x_arr[0], x_arr, y_arr, 1.0))
@@ -92,3 +91,15 @@ class TestLinearRegression(unittest.TestCase):
         print(regression.rssError(ab_y[100:199], y_hat.T.A))
         # 简单线性回归达到了与局部加权线性回归类似的效果。这表明一点，必须在未知数据上比较效果才能选取到最佳模型
         # 如果要得到更好的效果，应该对多个不同的数据集做多次测试来比较结果
+
+    def test_RidgeRegress(self):
+        ab_x, ab_y = dataset.load_abalone()
+        ridge_weights = regression.ridgeTest(ab_x, ab_y)
+
+        # 对岭回归的回归系数变化可视化
+        # λ非常小时，系数与普通回归一样；λ非常大时，所有回归系数缩减为 0。
+        # 可以在中间某处找到使得预测的结果最好的 λ 值
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        ax.plot(ridge_weights)
+        plt.show()
