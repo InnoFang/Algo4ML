@@ -10,7 +10,8 @@
  + [x] Logistic Regression
  + [x] SVM
  + [x] AdaBoost
- + [ ] Linear Regression
+ + [x] Linear Regression
+ + [ ] Tree Regression
 # Reference
 
  + Machine Leanrning in Action 
