@@ -11,7 +11,8 @@
  + [x] SVM
  + [x] AdaBoost
  + [x] Linear Regression
- + [ ] Tree Regression
+ + [ ] CART
+ 
 # Reference
 
  + Machine Leanrning in Action 
