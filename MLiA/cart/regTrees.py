@@ -79,3 +79,59 @@ def createTree(dataSet, leafType=regLeaf, errType=regErr, ops=(1, 4)):
     ret_tree['left'] = createTree(l_set, leafType, errType, ops)
     ret_tree['right'] = createTree(r_set, leafType, errType, ops)
     return ret_tree
+
+
+def isTree(obj):
+    """
+    测试输入是否是一棵树，换句话说，也是用于判断当前处理的节点是否是叶节点
+    :param obj:
+    :return:
+    """
+    return type(obj).__name__ == 'dict'
+
+
+def getMean(tree):
+    """
+    从上往下遍历直到叶节点为止，如果找到两个叶节点则计算它们的平均值
+    :param tree:
+    :return:
+    """
+    if isTree(tree['right']):
+        tree['right'] = getMean(tree['right'])
+    if isTree(tree['left']):
+        tree['left'] = getMean(tree['left'])
+    return (tree['left'] + tree['right']) / 2.0
+
+
+def prune(tree, testData):
+    """
+
+    :param tree: 待剪枝的树
+    :param testData: 剪枝所需的测试数据
+    :return:
+    """
+    # 没有测试数据时对树进行塌陷处理（即返回树平均值）
+    if np.shape(testData)[0] == 0:
+        return getMean(tree)
+    # 树只要非空，则反复递归调用函数 prune() 对测试数据进行切分
+    l_set, r_set = binSplitDataSet(testData, tree['spInd'], tree['spVal'])
+    # 叶子，即不是子树，则对两个分支进行合并
+    if not isTree(tree['right']) and not isTree(tree['left']):
+        error_non_merge = np.sum(np.power(l_set[:, -1] - tree['left'], 2)) + \
+            np.sum(np.power(r_set[:, -1] - tree['right'], 2))
+        tree_mean = (tree['left'] + tree['right']) / 2.0
+        error_merge = np.sum(np.power(testData[:, -1] - tree_mean, 2))
+        # 对合并前后的误差进行比较，如果合并后的误差比不合并的误差小就进行合并操作，反之不合并并返回
+        if error_merge < error_non_merge:
+            print("merging")
+            return tree_mean
+        else:
+            return tree
+    # 如果是子树，则递归进行剪枝
+    if isTree(tree['tree']):
+        tree['left'] = prune(tree['left'], l_set)
+    if isTree(tree['right']):
+        tree['right'] = prune(tree['right'], r_set)
+    return tree
+
+
