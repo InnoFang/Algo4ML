@@ -128,7 +128,7 @@ def prune(tree, testData):
         else:
             return tree
     # 如果是子树，则递归进行剪枝
-    if isTree(tree['tree']):
+    if isTree(tree['left']):
         tree['left'] = prune(tree['left'], l_set)
     if isTree(tree['right']):
         tree['right'] = prune(tree['right'], r_set)
