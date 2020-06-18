@@ -9,8 +9,8 @@ def binSplitDataSet(dataSet, feature, value):
     :param value:   该特征的某个值
     :return: 两个切分后的数据子集
     """
-    mat0 = dataSet[np.nonzero(dataSet[:, feature] > value)[0], :][0]
-    mat1 = dataSet[np.nonzero(dataSet[:, feature] <= value)[0], :][0]
+    mat0 = dataSet[np.nonzero(dataSet[:, feature] > value)[0], :]
+    mat1 = dataSet[np.nonzero(dataSet[:, feature] <= value)[0], :]
     return mat0, mat1
 
 
@@ -32,11 +32,11 @@ def regErr(dataSet):
     return np.var(dataSet[:, -1]) * np.shape(dataSet)[0]
 
 
-def chooseBestSplit(dataSet, leaftType=regLeaf, errType=regErr, ops=(1, 4)):
+def chooseBestSplit(dataSet, leafType=regLeaf, errType=regErr, ops=(1, 4)):
     """
     用最佳方式切分数据集和生成相应的叶节点
     :param dataSet: 数据集合
-    :param leaftType: 对创建叶节点的函数的引用
+    :param leafType: 对创建叶节点的函数的引用
     :param errType: 对总方差计算函数的引用
     :param ops: 用户自定义的参数构成的元组，用以完成树的构建
     :return:   切分特征、特征值
@@ -45,12 +45,12 @@ def chooseBestSplit(dataSet, leaftType=regLeaf, errType=regErr, ops=(1, 4)):
     tol_s, tol_n = ops[0], ops[1]
     # 统计不同剩余特征值的数目，若为 1，则不需要再切分而直接返回
     if len(set(dataSet[:, -1].T.tolist()[0])) == 1:
-        return None, leaftType(dataSet)
+        return None, leafType(dataSet)
     m, n = np.shape(dataSet)
     s = errType(dataSet)
     best_s, best_index, best_value = np.inf, 0, 0
     for feat_index in range(n - 1):
-        for split_val in set(dataSet[:, feat_index]):
+        for split_val in set(dataSet[:, feat_index].T.A.tolist()[0]):
             mat0, mat1 = binSplitDataSet(dataSet, feat_index, split_val)
             if np.shape(mat0)[0] < tol_n or np.shape(mat1)[0] < tol_n:
                 continue
@@ -61,11 +61,11 @@ def chooseBestSplit(dataSet, leaftType=regLeaf, errType=regErr, ops=(1, 4)):
                 best_s = new_s
     # 如果切分数据集后效果提升不够大，那么就不应该进行切分操作而直接创建叶节点
     if (s - best_s) < tol_s:
-        return None, leaftType(dataSet)
+        return None, leafType(dataSet)
     mat0, mat1 = binSplitDataSet(dataSet, best_index, best_value)
     # 检验两个切分后的子集大小，如果某个子集的大小小于用户定义的参数 tol_n，那么也不应切分，直接退出
     if np.shape(mat0)[0] < tol_n or np.shape(mat1)[0] < tol_n:
-        return None, leaftType(dataSet)
+        return None, leafType(dataSet)
     return best_index, best_value
 
 

@@ -9,7 +9,9 @@ def loadDataSet(fileName):
         for line in fr.readlines():
             cur_line = line.strip().split('\t')
             # 将每行映射成浮点数
-            flt_line = map(float, cur_line)
+            flt_line = []
+            for i in cur_line:
+                flt_line.append(float(i))
             data_mat.append(flt_line)
     return data_mat
 
