@@ -103,3 +103,8 @@ class TestLinearRegression(unittest.TestCase):
         ax = fig.add_subplot(111)
         ax.plot(ridge_weights)
         plt.show()
+
+    def test_stageWise(self):
+        x_arr, y_arr = dataset.load_abalone()
+        print(regression.stageWise(x_arr, y_arr, 0.001, 5000))
+
