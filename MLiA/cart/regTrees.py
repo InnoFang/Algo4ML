@@ -1,17 +1,6 @@
 import numpy as np
 
 
-def loadDataSet(fileName):
-    data_mat = []
-    with open(fileName) as fr:
-        for line in fr.readlines():
-            cur_line = line.strip().split('\t')
-            # 将每行映射成浮点数
-            flt_line = map(float, cur_line)
-            data_mat.append(flt_line)
-    return data_mat
-
-
 def binSplitDataSet(dataSet, feature, value):
     """
     通过数组过滤方式将数据集合切分得到两个子集并返回
