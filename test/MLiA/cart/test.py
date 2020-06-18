@@ -30,3 +30,15 @@ class TestCART(unittest.TestCase):
         # 在选项中耗费时间并对误差容忍度去平方值，也能得到仅有两个叶节点组成的树
         my_tree = regTrees.createTree(my_mat, ops=(10000, 4))
         print(my_tree)
+
+    def test_postpruning(self):
+        # 创建一棵尽可能大的树
+        my_data = dataset.load_ex2()
+        my_mat = np.mat(my_data)
+        my_tree = regTrees.createTree(my_mat)
+
+        # 导入测试数据
+        my_data_test = dataset.load_ex2test()
+        my_mat_test = np.mat(my_data_test)
+        new_tree = regTrees.prune(my_tree, my_mat_test)
+        print(new_tree)
