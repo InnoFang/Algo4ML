@@ -50,10 +50,11 @@ def chooseBestSplit(dataSet, leaftType=regLeaf, errType=regErr, ops=(1, 4)):
     :param leaftType: 对创建叶节点的函数的引用
     :param errType: 对总方差计算函数的引用
     :param ops: 用户自定义的参数构成的元组，用以完成树的构建
-    :return:
+    :return:   切分特征、特征值
     """
+    # 用户指定的参数，用于控制函数的停止时机，其中 tol_s 是容许的误差下降值，tol_n 是切分的最少样本数
     tol_s, tol_n = ops[0], ops[1]
-    # 如果所有值相等则退出
+    # 统计不同剩余特征值的数目，若为 1，则不需要再切分而直接返回
     if len(set(dataSet[:, -1].T.tolist()[0])) == 1:
         return None, leaftType(dataSet)
     m, n = np.shape(dataSet)
@@ -69,11 +70,11 @@ def chooseBestSplit(dataSet, leaftType=regLeaf, errType=regErr, ops=(1, 4)):
                 best_index = feat_index
                 best_value = split_val
                 best_s = new_s
-    # 如果误差减少不大则退出
+    # 如果切分数据集后效果提升不够大，那么就不应该进行切分操作而直接创建叶节点
     if (s - best_s) < tol_s:
         return None, leaftType(dataSet)
     mat0, mat1 = binSplitDataSet(dataSet, best_index, best_value)
-    # 如果且分出的数据集很小则退出
+    # 检验两个切分后的子集大小，如果某个子集的大小小于用户定义的参数 tol_n，那么也不应切分，直接退出
     if np.shape(mat0)[0] < tol_n or np.shape(mat1)[0] < tol_n:
         return None, leaftType(dataSet)
     return best_index, best_value
