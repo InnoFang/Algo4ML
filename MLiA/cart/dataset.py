@@ -20,6 +20,12 @@ def load_ex00():
     filename = pkg_resources.resource_filename(resource_package, 'data/ex00.txt')
     return loadDataSet(filename)
 
+
 def load_ex2():
     filename = pkg_resources.resource_filename(resource_package, 'data/ex2.txt')
+    return loadDataSet(filename)
+
+
+def load_ex2test():
+    filename = pkg_resources.resource_filename(resource_package, 'data/ex2test.txt')
     return loadDataSet(filename)
