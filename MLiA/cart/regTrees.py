@@ -118,7 +118,7 @@ def prune(tree, testData):
     # 叶子，即不是子树，则对两个分支进行合并
     if not isTree(tree['right']) and not isTree(tree['left']):
         error_non_merge = np.sum(np.power(l_set[:, -1] - tree['left'], 2)) + \
-            np.sum(np.power(r_set[:, -1] - tree['right'], 2))
+                          np.sum(np.power(r_set[:, -1] - tree['right'], 2))
         tree_mean = (tree['left'] + tree['right']) / 2.0
         error_merge = np.sum(np.power(testData[:, -1] - tree_mean, 2))
         # 对合并前后的误差进行比较，如果合并后的误差比不合并的误差小就进行合并操作，反之不合并并返回
@@ -135,3 +135,41 @@ def prune(tree, testData):
     return tree
 
 
+def linearSolve(dataSet):
+    """
+    将数据集格式化成目标变量 Y 和自变量 X
+    X 和 Y 用于执行简单的线性回归
+    :param dataSet:
+    :return:
+    """
+    m, n = np.shape(dataSet)
+    X, Y = np.mat(np.ones((m, n))), np.mat(np.ones((m, 1)))
+    X[:, 1:n] = dataSet[:, 0:n - 1]
+    Y = dataSet[:, -1]
+    xTx = X.T * X
+    # 若矩阵的逆不存在则会出现异常
+    if np.linalg.det(xTx) == 0.0:
+        raise NameError("This matrix is singular, cannot do inverse, try increasing the second value of ops")
+    ws = xTx.I * (X.T * X)
+    return ws, X, Y
+
+
+def modelLeaf(dataSet):
+    """
+    当数据不再需要切分的时候负责生成叶节点的模型
+    :param dataSet:
+    :return:
+    """
+    ws, X, Y = linearSolve(dataSet)
+    return ws
+
+
+def modelErr(dataSet):
+    """
+    在给定的数据集上计算误差
+    :param dataSet:
+    :return: y_hat 和 Y 之间的平方误差
+    """
+    ws, X, Y = linearSolve(dataSet)
+    y_hat = X * ws
+    return np.sum(np.power(Y - y_hat, 2))
