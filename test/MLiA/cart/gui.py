@@ -9,16 +9,52 @@ from matplotlib.figure import Figure
 
 
 def reDraw(tolS, tolN):
-    pass
+    reDraw.f.clf()
+    reDraw.a = reDraw.f.add_subplot(111)
+    if chk_btn_var.get():
+        if tolN < 2:
+            tolN = 2
+        my_tree = regTrees.createTree(reDraw.raw_data, regTrees.modelLeaf, regTrees.modelErr, (tolS, tolN))
+        y_hat = regTrees.createForecast(my_tree, reDraw.test_data, regTrees.modelTreeEval)
+    else:
+        my_tree = regTrees.createTree(reDraw.raw_data, ops=(tolS, tolN))
+        y_hat = regTrees.createForecast(my_tree, reDraw.test_data)
+    reDraw.a.scatter(np.array(reDraw.raw_data[:, 0]), np.array(reDraw.raw_data[:, 1]), s=5)
+    reDraw.a.plot(reDraw.test_data, y_hat, linewidth=2.0)
+    reDraw.canvas.draw()
+
+
+def getInputs():
+    try:
+        tol_n = int(tol_n_entry.get())
+    except:
+        tol_n = 10
+        print("enter Integer for tolN")
+        tol_n_entry.delete(0, tk.END)
+        tol_n_entry.insert(0, '10')
+
+    try:
+        tol_s = float(tol_s_entry.get())
+    except:
+        tol_s = 1.0
+        print("enter Float for tolS")
+        tol_s_entry.delete(0, tk.END)
+        tol_s_entry.insert(0, '1.0')
+    return tol_n, tol_s
 
 
 def drawNewTree():
-    pass
+    tol_n, tol_s = getInputs()
+    reDraw(tol_s, tol_n)
 
 
 root = tk.Tk()
 
-tk.Label(root, text="Plot Place Holder").grid(row=0, columnspan=3)
+reDraw.f = Figure(figsize=(5, 4), dpi=100)
+reDraw.canvas = FigureCanvasTkAgg(reDraw.f, master=root)
+reDraw.canvas.draw()
+reDraw.canvas.get_tk_widget().grid(row=0, columnspan=3)
+
 tk.Label(root, text="tolN").grid(row=1, column=0)
 tk.Label(root, text="tolS").grid(row=2, column=0)
 
@@ -41,4 +77,5 @@ reDraw.test_data = np.arange(np.min(reDraw.raw_data[:, 0]), np.max(reDraw.raw_da
 
 reDraw(1.0, 10)
 
-root.mainloop()
+if __name__ == '__main__':
+    root.mainloop()
