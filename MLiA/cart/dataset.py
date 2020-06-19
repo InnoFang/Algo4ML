@@ -34,3 +34,8 @@ def load_ex2test():
 def load_exp2():
     filename = pkg_resources.resource_filename(resource_package, 'data/exp2.txt')
     return loadDataSet(filename)
+
+
+def load_sine():
+    filename = pkg_resources.resource_filename(resource_package, 'data/sine.txt')
+    return loadDataSet(filename)
