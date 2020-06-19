@@ -173,3 +173,63 @@ def modelErr(dataSet):
     ws, X, Y = linearSolve(dataSet)
     y_hat = X * ws
     return np.sum(np.power(Y - y_hat, 2))
+
+
+def regTreeEval(model, inData):
+    """
+    对输入数据格式化，对回归树叶节点进行预测时调用
+    :param model:
+    :param inData: 为了与 modelTreeEval() 参数保持一致
+    :return:
+    """
+    return float(model)
+
+
+def modelTreeEval(model, inData):
+    """
+    对输入数据格式化，对模型树叶节点进行预测时调用
+    :param model:
+    :param inData:
+    :return:
+    """
+    n = np.shape(inData)[1]
+    X = np.mat(np.ones((1, n + 1)))
+    X[:, 1:n + 1] = inData
+    return float(X * model)
+
+
+def treeForecast(tree, inData, modelEval=regTreeEval):
+    """
+    自顶向下遍历整棵树，直到命中叶节点为止，并对叶节点调用 modelEval() 函数
+    :param tree:
+    :param inData:
+    :param modelEval: 对叶节点数据进行预测的函数引用，对会回归树节点进行预测时用 regTreeEval()，对模型树节点预测时用 modelTreeEval()
+    :return:
+    """
+    if not isTree(tree):
+        return modelEval(tree, inData)
+    if inData[tree['spInd']] > tree['spVal']:
+        if isTree(tree['left']):
+            return treeForecast(tree['left'], inData, modelEval)
+        else:
+            return modelEval(tree['left'], inData)
+    else:
+        if isTree(tree['right']):
+            return treeForecast(tree['right'], inData, modelEval)
+        else:
+            return modelEval(tree['right'], inData)
+
+
+def createForecast(tree, testData, modelEval=regTreeEval):
+    """
+    多次调用 treeForecast()，以向量形式返回一组预测值
+    :param tree:
+    :param testData:
+    :param modelEval:
+    :return:
+    """
+    m = len(testData)
+    y_hat = np.mat(np.zeros((m, 1)))
+    for i in range(m):
+        y_hat[i, 0] = treeForecast(tree, np.mat(testData[i]), modelEval)
+    return y_hat

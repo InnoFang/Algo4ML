@@ -39,3 +39,13 @@ def load_exp2():
 def load_sine():
     filename = pkg_resources.resource_filename(resource_package, 'data/sine.txt')
     return loadDataSet(filename)
+
+
+def load_bikeSpeedVsIq_test():
+    filename = pkg_resources.resource_filename(resource_package, 'data/bikeSpeedVsIq_test.txt')
+    return loadDataSet(filename)
+
+
+def load_bikeSpeedVsIq_train():
+    filename = pkg_resources.resource_filename(resource_package, 'data/bikeSpeedVsIq_train.txt')
+    return loadDataSet(filename)
