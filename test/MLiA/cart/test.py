@@ -47,3 +47,19 @@ class TestCART(unittest.TestCase):
         my_mat = np.mat(dataset.load_exp2())
         my_tree = regTrees.createTree(my_mat, regTrees.modelLeaf, regTrees.modelErr, (1, 10))
         print(my_tree)
+
+    def test_comparing(self):
+        train_mat = np.mat(dataset.load_bikeSpeedVsIq_train())
+        test_mat = np.mat(dataset.load_bikeSpeedVsIq_test())
+
+        # 回归树
+        my_tree = regTrees.createTree(train_mat, ops=(1, 20))
+        y_hat = regTrees.createForecast(my_tree, test_mat[:, 0])
+        # 输出相关系数，y_hat为预测值，后者为真实值
+        print(np.corrcoef(y_hat, test_mat[:, 1], rowvar=False)[0, 1])
+
+        # 模型树
+        ws, X, Y = regTrees.linearSolve(train_mat)
+        for i in range(np.shape(test_mat)[0]):
+            y_hat[i] = test_mat[i, 0] * ws[1, 0] + ws[0, 0]
+        print(np.corrcoef(y_hat, test_mat[:, 1], rowvar=False)[0, 1])
