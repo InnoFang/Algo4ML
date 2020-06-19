@@ -42,3 +42,8 @@ class TestCART(unittest.TestCase):
         my_mat_test = np.mat(my_data_test)
         new_tree = regTrees.prune(my_tree, my_mat_test)
         print(new_tree)
+
+    def test_modelTree(self):
+        my_mat = np.mat(dataset.load_exp2())
+        my_tree = regTrees.createTree(my_mat, regTrees.modelLeaf, regTrees.modelErr, (1, 10))
+        print(my_tree)
