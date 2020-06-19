@@ -44,7 +44,7 @@ def chooseBestSplit(dataSet, leafType=regLeaf, errType=regErr, ops=(1, 4)):
     # 用户指定的参数，用于控制函数的停止时机，其中 tol_s 是容许的误差下降值，tol_n 是切分的最少样本数
     tol_s, tol_n = ops[0], ops[1]
     # 统计不同剩余特征值的数目，若为 1，则不需要再切分而直接返回
-    if len(set(dataSet[:, -1].T.tolist()[0])) == 1:
+    if len(np.unique(dataSet[:, -1].T.tolist())) == 1:
         return None, leafType(dataSet)
     m, n = np.shape(dataSet)
     s = errType(dataSet)
