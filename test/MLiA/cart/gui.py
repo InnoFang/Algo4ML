@@ -2,29 +2,36 @@ from MLiA.cart import regTrees, dataset
 import numpy as np
 import tkinter as tk
 import matplotlib
-
+# 设定后端为 TkAgg
 matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
 
 def reDraw(tolS, tolN):
+    # 清空之前的图像
     reDraw.f.clf()
+    # 重新添加子图
     reDraw.a = reDraw.f.add_subplot(111)
+    # 检测选框是否选中，确定是模型树还是回归树
     if chk_btn_var.get():
         if tolN < 2:
             tolN = 2
         my_tree = regTrees.createTree(reDraw.raw_data, regTrees.modelLeaf, regTrees.modelErr, (tolS, tolN))
         y_hat = regTrees.createForecast(my_tree, reDraw.test_data, regTrees.modelTreeEval)
     else:
+        # 回归树
         my_tree = regTrees.createTree(reDraw.raw_data, ops=(tolS, tolN))
         y_hat = regTrees.createForecast(my_tree, reDraw.test_data)
+    # 画真实点的散点图
     reDraw.a.scatter(np.array(reDraw.raw_data[:, 0]), np.array(reDraw.raw_data[:, 1]), s=5)
+    # 画预测值的直线图
     reDraw.a.plot(reDraw.test_data, y_hat, linewidth=2.0)
     reDraw.canvas.draw()
 
 
 def getInputs():
+    # 获取用户输入值，tolN为整型，tolS为浮点型
     try:
         tol_n = int(tol_n_entry.get())
     except:
