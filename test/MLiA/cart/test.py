@@ -56,10 +56,17 @@ class TestCART(unittest.TestCase):
         my_tree = regTrees.createTree(train_mat, ops=(1, 20))
         y_hat = regTrees.createForecast(my_tree, test_mat[:, 0])
         # 输出相关系数，y_hat为预测值，后者为真实值
-        print(np.corrcoef(y_hat, test_mat[:, 1], rowvar=False)[0, 1])
+        print("回归树的相关系数:", np.corrcoef(y_hat, test_mat[:, 1], rowvar=False)[0, 1])
 
-        # 模型树
+        my_tree = regTrees.createTree(train_mat, regTrees.modelLeaf, regTrees.modelErr, (1, 20))
+        y_hat = regTrees.createForecast(my_tree, test_mat[:, 0], regTrees.modelTreeEval)
+        print("模型树的相关系数:", np.corrcoef(y_hat, test_mat[:, 1], rowvar=False)[0, 1])
+
+        # 相关系数越接近 1.0 越好，根据以上输出结果可知，模型树的结果比回归树的结果好
+
+        # 标准线性回归
         ws, X, Y = regTrees.linearSolve(train_mat)
         for i in range(np.shape(test_mat)[0]):
             y_hat[i] = test_mat[i, 0] * ws[1, 0] + ws[0, 0]
-        print(np.corrcoef(y_hat, test_mat[:, 1], rowvar=False)[0, 1])
+        print("标准线性回归的相关系数", np.corrcoef(y_hat, test_mat[:, 1], rowvar=False)[0, 1])
+        # 根据输出结果可已发现，标准线性回归的结果不如两种树回归，所以树回归方法在预测复杂数据时会比简单的线性模型更有效
