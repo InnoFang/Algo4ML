@@ -150,7 +150,7 @@ def linearSolve(dataSet):
     # 若矩阵的逆不存在则会出现异常
     if np.linalg.det(xTx) == 0.0:
         raise NameError("This matrix is singular, cannot do inverse, try increasing the second value of ops")
-    ws = xTx.I * (X.T * X)
+    ws = xTx.I * (X.T * Y)
     return ws, X, Y
 
 
