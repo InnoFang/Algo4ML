@@ -316,4 +316,4 @@ def smoPlatt(dataMatIn, classLabels, C, toler, maxIter, kTup=('lin', 0)):
         elif alpha_pairs_changed == 0:
             entire_set = True
         print("iteration number: %d" % iter)
-    return os.B, oS.alphas
+    return oS.B, oS.alphas
