@@ -7,19 +7,19 @@ def loadDataSet(fileName):
     labelMat = []
 
     # 打开文件
-    fr = open(fileName)
-
-    # 逐行分析
-    for line in fr.readlines():
-        # 得到每行的类标签和整个数据矩阵
-        lineArr = line.strip().split('\t')
-        dataMat.append([float(lineArr[0]), float(lineArr[1])])
-        labelMat.append(float(lineArr[2]))
+    with open(fileName) as fr:
+        # 逐行分析
+        for line in fr.readlines():
+            # 得到每行的类标签和整个数据矩阵
+            lineArr = line.strip().split('\t')
+            dataMat.append([float(lineArr[0]), float(lineArr[1])])
+            labelMat.append(float(lineArr[2]))
     return dataMat, labelMat
 
 
 def selectJrand(i, m):
     """
+    用于在某个区间范围内随机选择一个整数
     :param i: 第一个 alpha 的下标
     :param m: 所有 alpha 的数目
     :return: 返回一个 0 到 m 且不等于 i 的值
@@ -137,11 +137,11 @@ def smoSimple(dataMatIn, classLabels, C, toler, maxIter):
 
                 # 在对 alpha[i] 和 alpha[j] 进行优化之后，给这两个 alpha 值设置一个常数项 b
                 b1 = b - Ei - labelMat[i] * (alphas[i] - alphaIold) * \
-                              dataMatrix[i, :] * dataMatrix[i, :].T - \
+                     dataMatrix[i, :] * dataMatrix[i, :].T - \
                      labelMat[j] * (alphas[j] - alphaJold) * \
                      dataMatrix[i, :] * dataMatrix[j, :].T
                 b2 = b - Ej - labelMat[i] * (alphas[i] - alphaIold) * \
-                              dataMatrix[i, :] * dataMatrix[j, :].T - \
+                     dataMatrix[i, :] * dataMatrix[j, :].T - \
                      labelMat[j] * (alphas[j] - alphaJold) * \
                      dataMatrix[j, :] * dataMatrix[j, :].T
                 if (0 < alphas[i]) and (C > alphas[i]):
