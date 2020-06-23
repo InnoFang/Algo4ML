@@ -18,3 +18,12 @@ class TestSVM(unittest.TestCase):
         for i in range(100):
             if alphas[i] > 0.0:
                 print(data_arr[i], label_arr[i])
+
+    def test_smoPlatt(self):
+        data_arr, label_arr = svm.loadDataSet("data/testSet.txt")
+        b, alphas = svm.smoPlatt(data_arr, label_arr, 0.6, 0.001, 40)
+        ws = svm.calcWs(alphas, data_arr, label_arr)
+        print(ws)
+        data_mat = np.mat(data_arr)
+        print(data_mat[0] * np.mat(ws) + b)
+        print(label_arr[0])
