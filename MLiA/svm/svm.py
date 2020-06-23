@@ -172,12 +172,27 @@ def smoSimple(dataMatIn, classLabels, C, toler, maxIter):
 """
 
 
+def kernelTrans(X, A, kTup):
+    m, n = np.shape(X)
+    K = np.mat(np.zeros((m, 1)))
+    if kTup[0] == 'lin':
+        K = X * A.T
+    elif kTup[0] == 'rbf':
+        for j in range(m):
+            delta_row = X[j, :] - A
+            K[j] = delta_row * delta_row.T
+        K = np.exp(K / (-1 * kTup[1] ** 2))
+    else:
+        raise NameError("Houston We Have a Problem That kernel is not recognized")
+    return K
+
+
 class optStruct:
     """
     使用一个数据结构老保存所有的重要值，可以省掉很多手工输入的麻烦
     """
 
-    def __init__(self, dataMatIn, classLabels, C, toler):
+    def __init__(self, dataMatIn, classLabels, C, toler, kTup):
         self.X = dataMatIn
         self.label_mat = classLabels
         self.C = C
@@ -187,6 +202,9 @@ class optStruct:
         self.b = 0
         # 误差缓存
         self.e_cache = np.mat(np.zeros((self.m, 2)))
+        self.K = np.mat(np.zeros((self.m, self.m)))
+        for i in range(self.m):
+            self.K[:, i] = kernelTrans(self.X, self.X[i, :], kTup)
 
 
 def calcEk(oS, k):
@@ -196,7 +214,7 @@ def calcEk(oS, k):
     :param k:
     :return:
     """
-    fXk = float(np.multiply(oS.alphas, oS.label_mat).T * (oS.X * oS.X[k, :].T)) + oS.b
+    fXk = float(np.multiply(oS.alphas, oS.label_mat).T * oS.K[:, k] + oS.b)
     Ek = fXk - float(oS.label_mat[k])
     return Ek
 
@@ -252,7 +270,7 @@ def innerL(i: int, oS):
         if L == H:
             print("L==H")
             return 0
-        eta = 2.0 * oS.X[i, :] * oS.X[j, :].T - oS.X[i, :] * oS.X[i, :].T - oS.X[j, :] * oS.X[j, :].T
+        eta = 2.0 * oS.K[i, j] - oS.K[i, i] - oS.K[j, j]
         if eta >= 0:
             print("eta>=0")
             return 0
@@ -264,10 +282,10 @@ def innerL(i: int, oS):
             return 0
         oS.alphas[i] += oS.label_mat[j] * oS.label_mat[i] * (alpha_j_old - oS.alphas[j])
         updateEk(oS, i)
-        b1 = oS.b - Ei - oS.label_mat[i] * (oS.alphas[i] - alpha_i_old) * oS.X[i, :] * oS.X[i, :].T - oS.label_mat[j] * \
-             (oS.alphas[j] - alpha_j_old) * oS.X[i, :] * oS.X[j, :].T
-        b2 = oS.b - Ej - oS.label_mat[i] * (oS.alphas[i] - alpha_i_old) * oS.X[i, :] * oS.X[j, :].T - oS.label_mat[j] * \
-             (oS.alphas[j] - alpha_j_old) * oS.X[j, :] * oS.X[j, :].T
+        b1 = oS.b - Ei - oS.label_mat[i] * (oS.alphas[i] - alpha_i_old) * oS.K[i, i] - oS.label_mat[j] * \
+             (oS.alphas[j] - alpha_j_old) * oS.K[i, j]
+        b2 = oS.b - Ej - oS.label_mat[i] * (oS.alphas[i] - alpha_i_old) * oS.K[i, j] - oS.label_mat[j] * \
+             (oS.alphas[j] - alpha_j_old) * oS.K[j, j]
         if 0 < oS.alphas[i] < oS.C:
             oS.b = b1
         elif 0 < oS.alphas[i] < oS.C:
