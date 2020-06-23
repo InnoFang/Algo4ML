@@ -183,10 +183,10 @@ class optStruct:
         self.C = C
         self.tol = toler
         self.m = np.shape(dataMatIn)[0]
-        self.alphas = np.mat(np.zero((self.m, 1)))
+        self.alphas = np.mat(np.zeros((self.m, 1)))
         self.b = 0
         # 误差缓存
-        self.e_cache = np.mat(np.zero((self.m, 2)))
+        self.e_cache = np.mat(np.zeros((self.m, 2)))
 
 
 def calcEk(oS, k):
@@ -238,8 +238,8 @@ def updateEk(oS, k):
     oS.e_cache[k] = [1, Ek]
 
 
-def innerL(i, oS):
-    Ei = calcEk(i, oS)
+def innerL(i: int, oS):
+    Ei = calcEk(oS, i)
     if (oS.label_mat[i] * Ei < -oS.tol and oS.alphas[i] < oS.C) or (oS.label_mat[i] * Ei > oS.tol and oS.alphas[i] > 0):
         j, Ej = selectJ(i, oS, Ei)
         alpha_i_old, alpha_j_old = oS.alphas[i].copy(), oS.alphas[j].copy()
@@ -265,9 +265,9 @@ def innerL(i, oS):
         oS.alphas[i] += oS.label_mat[j] * oS.label_mat[i] * (alpha_j_old - oS.alphas[j])
         updateEk(oS, i)
         b1 = oS.b - Ei - oS.label_mat[i] * (oS.alphas[i] - alpha_i_old) * oS.X[i, :] * oS.X[i, :].T - oS.label_mat[j] * \
-             (oS.alphas[j] - alpha_j_old) * oS.X[i, j] * oS.X[j, j].T
+             (oS.alphas[j] - alpha_j_old) * oS.X[i, :] * oS.X[j, :].T
         b2 = oS.b - Ej - oS.label_mat[i] * (oS.alphas[i] - alpha_i_old) * oS.X[i, :] * oS.X[j, :].T - oS.label_mat[j] * \
-             (oS.alphas[j] - alpha_j_old) * oS.X[j, j] * oS.X[j, j].T
+             (oS.alphas[j] - alpha_j_old) * oS.X[j, :] * oS.X[j, :].T
         if 0 < oS.alphas[i] < oS.C:
             oS.b = b1
         elif 0 < oS.alphas[i] < oS.C:
