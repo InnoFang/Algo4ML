@@ -27,3 +27,30 @@ class TestSVM(unittest.TestCase):
         data_mat = np.mat(data_arr)
         print(data_mat[0] * np.mat(ws) + b)
         print(label_arr[0])
+
+    def test_Rbf(self, k1=1.3):
+        data_arr, label_arr = svm.loadDataSet("data/testSetRBF.txt")
+        b, alphas = svm.smoPlatt(data_arr, label_arr, 200, 0.0001, 10000, ('rbf', k1))
+        data_mat, label_mat = np.mat(data_arr), np.mat(label_arr).transpose()
+        sv_ind = np.nonzero(alphas.A > 0)[0]
+        sVs = data_mat[sv_ind]
+        label_sv = label_mat[sv_ind]
+        print("there are %d Support Vectors" % np.shape(sVs)[0])
+        m, n = np.shape(data_mat)
+        error_count = 0
+        for i in range(m):
+            kernel_eval = svm.kernelTrans(sVs, data_mat[i, :], ('rbf', k1))
+            predict = kernel_eval.T * np.multiply(label_sv, alphas[sv_ind]) + b
+            if np.sign(predict) != np.sign(label_arr[i]):
+                error_count += 1
+        print("the training error rate is: %f" % (float(error_count) / m))
+        data_arr, label_arr = svm.loadDataSet("data/testSetRBF2.txt")
+        error_count = 0
+        data_mat, label_mat = np.mat(data_arr), np.mat(label_arr).transpose()
+        m, n = np.shape(data_mat)
+        for i in range(m):
+            kernel_eval = svm.kernelTrans(sVs, data_mat[i, :], ('rbf', k1))
+            predict = kernel_eval.T * np.multiply(label_sv, alphas[sv_ind]) + b
+            if np.sign(predict) != np.sign(label_arr[i]):
+                error_count += 1
+        print("the test error rate is: %f" % (float(error_count) / m))
