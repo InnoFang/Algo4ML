@@ -316,4 +316,13 @@ def smoPlatt(dataMatIn, classLabels, C, toler, maxIter, kTup=('lin', 0)):
         elif alpha_pairs_changed == 0:
             entire_set = True
         print("iteration number: %d" % iter)
-    return oS.B, oS.alphas
+    return oS.b, oS.alphas
+
+
+def calcWs(alphas, dataArr, classLabels):
+    X, label_mat = np.mat(dataArr), np.mat(classLabels).transpose()
+    m, n = np.shape(X)
+    w = np.zeros((n, 1))
+    for i in range(m):
+        w += np.multiply(alphas[i] * label_mat[i], X[i, :].T)
+    return w
