@@ -312,7 +312,8 @@ def smoPlatt(dataMatIn, classLabels, C, toler, maxIter, kTup=('lin', 0)):
         np.mat(dataMatIn),
         np.mat(classLabels).transpose(),
         C,
-        toler
+        toler,
+        kTup
     )
     iter = 0
     entire_set, alpha_pairs_changed = True, 0
