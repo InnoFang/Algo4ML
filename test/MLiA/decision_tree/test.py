@@ -1,4 +1,4 @@
-from MLiA.decision_tree import trees, treePlotter, dataset
+from MLiA.decision_tree import trees, treePlotter
 import unittest
 
 
@@ -74,7 +74,7 @@ class TestDecisionTree(unittest.TestCase):
         print(trees.grabTree('classifierStorage.txt'))
 
     def test_predict_lenses_type(self):
-        fr = open(dataset.load_lenses())
+        fr = open('data/lenses.txt')
         lenses = [inst.strip().split('\t') for inst in fr.readlines()]
         lenses_labels = ['age', 'prescript', 'astigmatic', 'tearRate']
         lenses_tree = trees.createTree(lenses, lenses_labels.copy())
