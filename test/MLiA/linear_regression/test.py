@@ -1,19 +1,19 @@
 import numpy as np
 import unittest
 import matplotlib.pyplot as plt
-from MLiA.linear_regresssion import dataset, regression
+from MLiA.linear_regresssion import regression
 
 
 class TestLinearRegression(unittest.TestCase):
     def test_loadDataSet(self):
-        x_arr, y_arr = dataset.load_ex0()
+        x_arr, y_arr = regression.loadDataSet('data/ex0.txt')
         print(x_arr[0: 2])
         ws = regression.standRegress(x_arr, y_arr)
         print(ws)
 
     def test_drawRegression(self):
         import matplotlib.pyplot as plt
-        x_arr, y_arr = dataset.load_ex0()
+        x_arr, y_arr = regression.loadDataSet('data/ex0.txt')
         ws = regression.standRegress(x_arr, y_arr)
         x_mat = np.mat(x_arr)
         y_mat = np.mat(y_arr)
@@ -28,7 +28,7 @@ class TestLinearRegression(unittest.TestCase):
         plt.show()
 
     def test_lwlr(self):
-        x_arr, y_arr = dataset.load_ex0()
+        x_arr, y_arr = regression.loadDataSet('data/ex0.txt')
         # 对单点进行估计
         print(regression.lwlr(x_arr[0], x_arr, y_arr, 1.0))
         print(regression.lwlr(x_arr[0], x_arr, y_arr, 0.001))
@@ -65,7 +65,7 @@ class TestLinearRegression(unittest.TestCase):
         abalone 数据集：0-99训练集，100-199测试集
         :return:
         """
-        ab_x, ab_y = dataset.load_abalone()
+        ab_x, ab_y = regression.loadDataSet('data/abalone.txt')
         y_hat01 = regression.lwlrTest(ab_x[0:99], ab_x[0:99], ab_y[0:99], 0.1)
         y_hat1 = regression.lwlrTest(ab_x[0:99], ab_x[0:99], ab_y[0:99], 1)
         y_hat10 = regression.lwlrTest(ab_x[0:99], ab_x[0:99], ab_y[0:99], 10)
@@ -93,7 +93,7 @@ class TestLinearRegression(unittest.TestCase):
         # 如果要得到更好的效果，应该对多个不同的数据集做多次测试来比较结果
 
     def test_RidgeRegress(self):
-        ab_x, ab_y = dataset.load_abalone()
+        ab_x, ab_y = regression.loadDataSet('data/abalone.txt')
         ridge_weights = regression.ridgeTest(ab_x, ab_y)
 
         # 对岭回归的回归系数变化可视化
@@ -105,6 +105,6 @@ class TestLinearRegression(unittest.TestCase):
         plt.show()
 
     def test_stageWise(self):
-        x_arr, y_arr = dataset.load_abalone()
+        x_arr, y_arr = regression.loadDataSet('data/abalone.txt')
         print(regression.stageWise(x_arr, y_arr, 0.001, 5000))
 
