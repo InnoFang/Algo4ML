@@ -1,4 +1,4 @@
-from MLiA.adaboost import adaboost, dataset
+from MLiA.adaboost import adaboost
 import matplotlib.pyplot as plt
 import numpy as np
 import unittest
@@ -35,9 +35,9 @@ class TestAdaBoost(unittest.TestCase):
         print(result)
 
     def test_adaBoost(self):
-        data_arr, label_arr = dataset.load_horseColicTraining()
+        data_arr, label_arr = adaboost.loadDataSet("data/horseColicTraining2.txt")
         classifier_array = adaboost.adaBoostTrainDS(data_arr, label_arr, 10)
-        test_arr, test_label_arr = dataset.load_horseColicTest()
+        test_arr, test_label_arr = adaboost.loadDataSet('data/horseColicTest2.txt')
         prediction10 = adaboost.adaClassify(test_arr, classifier_array)
         err_arr = np.mat(np.ones((67, 1)))
         print(err_arr[prediction10 != np.mat(test_label_arr).T].sum())
