@@ -1,4 +1,4 @@
-from MLiA.cart import regTrees, dataset
+from MLiA.cart import regTrees
 import numpy as np
 import tkinter as tk
 import matplotlib
@@ -79,7 +79,7 @@ chk_btn_var = tk.IntVar()
 chk_btn = tk.Checkbutton(root, text="Model Tree", variable=chk_btn_var)
 chk_btn.grid(row=3, column=0, columnspan=2)
 
-reDraw.raw_data = np.mat(dataset.load_sine())
+reDraw.raw_data = np.mat(regTrees.loadDataSet('data/sine.txt'))
 reDraw.test_data = np.arange(np.min(reDraw.raw_data[:, 0]), np.max(reDraw.raw_data[:, 0]), 0.01)
 
 reDraw(1.0, 10)

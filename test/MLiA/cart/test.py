@@ -1,4 +1,4 @@
-from MLiA.cart import regTrees, dataset
+from MLiA.cart import regTrees
 import numpy as np
 import unittest
 
@@ -12,13 +12,13 @@ class TestCART(unittest.TestCase):
         print(mat1)
 
     def test_createTree(self):
-        my_data = dataset.load_ex00()
+        my_data = regTrees.loadDataSet('data/ex00.txt')
         my_mat = np.mat(my_data)
         my_tree = regTrees.createTree(my_mat)
         print(my_tree)
 
     def test_prepruning(self):
-        my_data = dataset.load_ex2()
+        my_data = regTrees.loadDataSet('data/ex2.txt')
         my_mat = np.mat(my_data)
         my_tree = regTrees.createTree(my_mat)
         # 输出很多叶节点
@@ -33,24 +33,24 @@ class TestCART(unittest.TestCase):
 
     def test_postpruning(self):
         # 创建一棵尽可能大的树
-        my_data = dataset.load_ex2()
+        my_data = regTrees.loadDataSet('data/ex2.txt')
         my_mat = np.mat(my_data)
         my_tree = regTrees.createTree(my_mat)
 
         # 导入测试数据
-        my_data_test = dataset.load_ex2test()
+        my_data_test = regTrees.loadDataSet('data/ex2test.txt')
         my_mat_test = np.mat(my_data_test)
         new_tree = regTrees.prune(my_tree, my_mat_test)
         print(new_tree)
 
     def test_modelTree(self):
-        my_mat = np.mat(dataset.load_exp2())
+        my_mat = np.mat(regTrees.loadDataSet('data/exp2.txt'))
         my_tree = regTrees.createTree(my_mat, regTrees.modelLeaf, regTrees.modelErr, (1, 10))
         print(my_tree)
 
     def test_comparing(self):
-        train_mat = np.mat(dataset.load_bikeSpeedVsIq_train())
-        test_mat = np.mat(dataset.load_bikeSpeedVsIq_test())
+        train_mat = np.mat(regTrees.loadDataSet('data/bikeSpeedVsIq_train.txt'))
+        test_mat = np.mat(regTrees.loadDataSet('data/bikeSpeedVsIq_test.txt'))
 
         # 回归树
         my_tree = regTrees.createTree(train_mat, ops=(1, 20))
