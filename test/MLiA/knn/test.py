@@ -79,10 +79,7 @@ class TestKNN(unittest.TestCase):
         kNN.classifyPerson()
 
     def test_img2verctor(self):
-        import pkg_resources
-        filename = pkg_resources.resource_filename(kNN.__name__, 'data/testDigits/0_0.txt')
-
-        test_vector = kNN.img2vector(filename)
+        test_vector = kNN.img2vector(dataset.load_testDigits('0_0.txt'))
         for i in range(32):
             print(test_vector[0, 0 + i * 32:31 + i * 32])
 
