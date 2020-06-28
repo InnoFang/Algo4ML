@@ -8,7 +8,7 @@
  + [x] Decision Tree
  + [x] Naive Bayes
  + [x] Logistic Regression
- + [ ] SVM
+ + [x] SVM
  + [x] AdaBoost
  + [x] Linear Regression
  + [x] CART
