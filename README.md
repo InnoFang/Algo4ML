@@ -1,7 +1,5 @@
 # Algorithm for machine learning
 
-![](https://img.shields.io/badge/python-3.8-blue.svg) [![Build Status](https://travis-ci.org/InnoFang/Algo4ML.svg?branch=master)](https://travis-ci.org/InnoFang/Algo4ML)
-
 <br />
 
  + [x] kNN
