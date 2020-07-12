@@ -10,6 +10,7 @@
  + [x] AdaBoost
  + [x] Linear Regression
  + [x] CART
+ + [ ] K-means
  
 # Reference
 
