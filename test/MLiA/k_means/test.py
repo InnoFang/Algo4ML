@@ -14,3 +14,6 @@ class TestKMeans(unittest.TestCase):
         print('centroids:', centroids)
         print('kMeans.distEclud(data_mat[0], data_mat[1]):', kMeans.distEclud(data_mat[0], data_mat[1]))
 
+    def test_kMeans(self):
+        data_mat = np.mat(kMeans.loadDataSet('data/testSet.txt'))
+        kMeans.kMeans(data_mat, 4)
