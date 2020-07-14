@@ -17,3 +17,8 @@ class TestKMeans(unittest.TestCase):
     def test_kMeans(self):
         data_mat = np.mat(kMeans.loadDataSet('data/testSet.txt'))
         kMeans.kMeans(data_mat, 4)
+
+    def test_biKmeans(self):
+        data_mat = np.mat(kMeans.loadDataSet('data/testSet2.txt'))
+        cent_list, my_new_assments = kMeans.biKmeans(data_mat, 3)
+        print('cent_list:', cent_list)
