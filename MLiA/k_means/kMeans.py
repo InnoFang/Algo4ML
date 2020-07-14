@@ -73,3 +73,40 @@ def kMeans(dataSet, k, distMeas=distEclud, createCent=randCent):
             # 计算所有点的均值，axis=0 表示沿矩阵的列方向进行均值计算
             centroids[cent, :] = np.mean(pts_in_clust, axis=0)
     return centroids, cluster_assment
+
+
+def biKmeans(dataSet, k, distMeas=distEclud):
+    m = np.shape(dataSet)[0]
+    # 创建一个初始簇
+    cluster_assment = np.mat(np.zeros((m, 2)))
+    centroid0 = np.mean(dataSet, axis=0).tolist()[0]
+    cent_list = [centroid0]
+    # 遍历数据集中所有点来计算每个点到质心的误差值
+    for j in range(m):
+        cluster_assment[j, 1] = distMeas(np.mat(centroid0), dataSet[j, :]) ** 2
+    # 不停的对簇进行划分，直到得到想要的簇数目为止
+    while len(cent_list) < k:
+        lowest_sse = np.inf
+        for i in range(len(cent_list)):
+            # 尝试划分每一簇
+            pts_in_curr_cluster = dataSet[np.nonzero(cluster_assment[:, 0].A == i)[0], :]
+            centroid_mat, split_clust_ass = kMeans(pts_in_curr_cluster, 2, distMeas)
+            sse_split = np.sum(split_clust_ass[:, 1])
+            sse_not_split = np.sum(cluster_assment[np.nonzero(cluster_assment[:, 0].A != i)[0], 1])
+            print('sse_split:', sse_split, '; not_split:', sse_not_split)
+            # 如果当前划分的 SSE 值最小，则本次划分被保存
+            if (sse_split + sse_not_split) < lowest_sse:
+                best_cent_to_split = i
+                best_new_cents = centroid_mat
+                best_clust_ass = split_clust_ass.copy()
+                lowest_sse = sse_split + sse_not_split
+        # 更新簇的分配结果
+        best_clust_ass[np.nonzero(best_clust_ass[:, 0].A == 1)[0], 0] = len(cent_list)
+        best_clust_ass[np.nonzero(best_clust_ass[:, 0].A == 0)[0], 0] = best_cent_to_split
+        print('the best_cent_to_split is:', best_cent_to_split)
+        print('the len of bnest_clust_ass is:', len(best_clust_ass))
+        cent_list[best_cent_to_split] = best_new_cents[0, :]
+        cent_list.append(best_new_cents[1, :])
+        cluster_assment[np.nonzero(cluster_assment[:, 0].A) == best_cent_to_split[0], :] = best_clust_ass
+    return np.mat(cent_list), cluster_assment
+
