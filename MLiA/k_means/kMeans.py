@@ -90,9 +90,9 @@ def biKmeans(dataSet, k, distMeas=distEclud):
         for i in range(len(cent_list)):
             # 尝试划分每一簇
             pts_in_curr_cluster = dataSet[np.nonzero(cluster_assment[:, 0].A == i)[0], :]
-            centroid_mat, split_clust_ass = kMeans(pts_in_curr_cluster, 2, distMeas)
-            sse_split = np.sum(split_clust_ass[:, 1])
-            sse_not_split = np.sum(cluster_assment[np.nonzero(cluster_assment[:, 0].A != i)[0], 1])
+            centroid_mat, split_clust_ass = kMeans(pts_in_curr_cluster, 2)
+            sse_split = split_clust_ass[:, 1].sum()
+            sse_not_split = cluster_assment[np.nonzero(cluster_assment[:, 0].A != i)[0], 1].sum()
             print('sse_split:', sse_split, '; not_split:', sse_not_split)
             # 如果当前划分的 SSE 值最小，则本次划分被保存
             if (sse_split + sse_not_split) < lowest_sse:
@@ -106,7 +106,7 @@ def biKmeans(dataSet, k, distMeas=distEclud):
         print('the best_cent_to_split is:', best_cent_to_split)
         print('the len of bnest_clust_ass is:', len(best_clust_ass))
         cent_list[best_cent_to_split] = best_new_cents[0, :]
-        cent_list.append(best_new_cents[1, :])
-        cluster_assment[np.nonzero(cluster_assment[:, 0].A) == best_cent_to_split[0], :] = best_clust_ass
+        cent_list.append(best_new_cents[1, :].tolist()[0])
+        cluster_assment[np.nonzero(cluster_assment[:, 0].A == best_cent_to_split)[0], :] = best_clust_ass
     return np.mat(cent_list), cluster_assment
 
