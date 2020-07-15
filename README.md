@@ -10,7 +10,8 @@
  + [x] AdaBoost
  + [x] Linear Regression
  + [x] CART
- + [ ] K-means
+ + [x] K-means
+ + [ ] PCA
  
 # Reference
 
