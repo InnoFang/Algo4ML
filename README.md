@@ -11,7 +11,7 @@
  + [x] Linear Regression
  + [x] CART
  + [x] K-means
- + [ ] PCA
+ + [x] PCA
  
 # Reference
 
