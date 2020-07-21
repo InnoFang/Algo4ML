@@ -1,7 +1,5 @@
 # Algorithm for machine learning
 
-<br />
-
  + [x] kNN
  + [x] Decision Tree
  + [x] Naive Bayes
@@ -11,7 +9,7 @@
  + [x] Linear Regression
  + [x] CART
  + [x] K-means
- + [x] PCA
+ + [x] PCA 
  
 # Reference
 
