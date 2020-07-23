@@ -1,4 +1,4 @@
-from DL.linear_unit.linear_unit import LinearUnit
+from DeepLearning.linear_unit.linear_unit import LinearUnit
 from matplotlib import pyplot as plt
 
 

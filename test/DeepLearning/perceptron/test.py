@@ -1,4 +1,4 @@
-from DL.perceptron.perceptron import Perceptron
+from DeepLearning.perceptron.perceptron import Perceptron
 
 
 def f(x):

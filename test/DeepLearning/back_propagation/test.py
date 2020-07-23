@@ -1,4 +1,4 @@
-from DL.back_propagation.bp import *
+from DeepLearning.back_propagation.bp import *
 from functools import reduce
 from numpy import *
 
