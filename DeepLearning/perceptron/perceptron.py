@@ -26,11 +26,15 @@ class Perceptron:
         """
         return self.activator(sum([x * w for (x, w) in zip(input_vec, self.weights)]) + self.bias)
 
-    def train(self, input_vecs, labels, interation, rate):
+    def train(self, input_vecs, labels, iteration, rate):
         """
-        输入训练向量：一组向量、与每个向量对应的label；以及训练轮数、学习率
+        :param input_vecs: 特征向量
+        :param labels: 标签
+        :param iteration: 迭代次数
+        :param rate: 学习率
+        :return:
         """
-        for i in range(interation):
+        for i in range(iteration):
             self._one_iteration(input_vecs, labels, rate)
 
     def _one_iteration(self, input_vecs, labels, rate):
