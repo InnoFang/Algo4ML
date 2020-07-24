@@ -108,7 +108,7 @@ class Node:
         return node_str + '\n\tdownstream:' + downstream_str + '\n\tupstream:' + upstream_str
 
 
-class ConstNode:
+class ConstNode(Node):
     """
     ConstNode 对象，为了实现一个输出恒为 1 的节点（计算偏置项 wb 时需要）
     常数项对象，即相当于计算的时候的偏置项
@@ -120,6 +120,7 @@ class ConstNode:
         :param layer_index: 节点所属的层的编号 
         :param node_index: 节点的编号
         """
+        super().__init__(layer_index, node_index)
         self.layer_index = layer_index
         self.node_index = node_index
         self.downstream = []
@@ -138,7 +139,7 @@ class ConstNode:
         """
         计算隐藏层的节点的 delta
         公式
-        δ_i = a_i(1-a_i) Σ(w_ki·δ_k)
+        δ_i = a_i ( 1 - a_i ) Σ( w_ki · δ_k )
         δ_i 是节点i的误差，a是节点i的输出值，w是节点i到下一层节点k的连接的权重
         δ_k 是节点 i 的下一层节点k的误差项
         """
