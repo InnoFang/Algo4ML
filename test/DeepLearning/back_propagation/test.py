@@ -134,7 +134,7 @@ def main():
     train(network)
     # 将我们的神经网络的信息打印出来
     network.dump()
-    # 打印出神经网络的正确率
+    # 打印出神经网络         的正确率
     correct_ratio(network)
 
 
