@@ -63,33 +63,33 @@ class Network:
             self.layers.append(
                 FullConnectedLayer(layers[i], layers[i + 1], SigmoidActivator()))
 
-    def predict(self, sample):
+    def predict(self, X):
         """
         使用神经网络实现预测
-        :param sample: 输入样本
+        :param X: 输入样本
         :return:
         """
-        output = sample
+        output = X
         for layer in self.layers:
             layer.forward(output)
             output = layer.output
         return output
 
-    def train(self, labels, data_set, rate, epoch):
+    def train(self, X_train, y_train, learning_rate, epoch):
         """
         训练函数
-        :param labels: 样本标签
-        :param data_set: 输入样本
-        :param rate: 学习率
+        :param X_train: 输入样本
+        :param y_train: 样本标签
+        :param learning_rate: 学习率
         :param epoch: 训练论数
         """
         for i in range(epoch):
-            for d in range(len(data_set)):
-                self.train_one_sample(labels[d], data_set[d], rate)
+            for d in range(len(X_train)):
+                self.train_one_sample(X_train[d], y_train[d], learning_rate)
 
-    def train_one_sample(self, label, sample, rate):
-        self.predict(sample)
-        self.calc_gradient(label)
+    def train_one_sample(self, X_train, y_train, rate):
+        self.predict(X_train)
+        self.calc_gradient(y_train)
         self.update_weight(rate)
 
     def calc_gradient(self, label):
@@ -102,3 +102,11 @@ class Network:
     def update_weight(self, rate):
         for layer in self.layers:
             layer.update(rate)
+
+    def accuracy(self, X, labels):
+        y = self.predict(X)
+        y = np.argmax(y, axis=1)
+        labels = np.argmax(labels, axis=1)
+
+        accuracy = np.sum(y == t) / float(X.shape[0])
+        return accuracy
