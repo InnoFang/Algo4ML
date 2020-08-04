@@ -49,11 +49,23 @@ class FullConnectedLayer:
 
 
 class SigmoidActivator:
-    def forward(self, weighted_input):
-        return 1.0 / (1.0 + np.exp(-weighted_input))
+    def __init__(self):
+        self.out = None
 
-    def backward(self, output):
-        return output * (1 - output)
+    def forward(self, X):
+        out = 1.0 / (1.0 + np.exp(-X))
+        self.out = out
+
+        return out
+
+    def backward(self, dout):
+        """
+        sigmod 的导数：y * ( 1 - y )
+        :param dout: 下一层的导数
+        :return:
+        """
+        dx = dout * (1.0 - self.out) * self.out
+        return dx
 
 
 class Network:
