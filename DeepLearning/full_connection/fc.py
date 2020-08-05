@@ -57,28 +57,46 @@ class _SigmoidActivator:
     def __init__(self):
         self.out = None
 
-    def forward(self, X):
-        out = 1.0 / (1.0 + np.exp(-X))
+    def forward(self, x):
+        out = 1.0 / (1.0 + np.exp(-x))
         self.out = out
 
         return out
 
-    def backward(self, dout):
+    def backward(self, delta):
         """
         sigmod 的导数：y * ( 1 - y )
-        :param dout: 反向传播的上一层的导数
+        :param delta: 反向传播的上一层的导数
         :return:
         """
-        dx = dout * (1.0 - self.out) * self.out
+        dx = delta * (1.0 - self.out) * self.out
         return dx
+
+
+class _SoftmaxActivator:
+    def __init__(self):
+        self.out = None
+
+    def forward(self, x):
+        x -= np.max(x)
+        self.out = np.exp(x) / np.sum(np.exp(x))
+
+        return self.out
+
+    def backward(self, delta):
+        dout = np.diag(self.out) - np.outer(self.out, self.out)
+        return np.dot(dout, delta)
 
 
 class Network:
     def __init__(self, layers):
         self.layers = []
         for i in range(len(layers) - 1):
+            activator = _SigmoidActivator
+            if i == len(layers) - 1:
+                activator = _SoftmaxActivator
             self.layers.append(
-                _FullConnectedLayer(layers[i], layers[i + 1], _SigmoidActivator()))
+                _FullConnectedLayer(layers[i], layers[i + 1], activator()))
 
     def train(self, X_train, y_train, learning_rate, epoch):
         """
@@ -121,6 +139,7 @@ class Network:
         y = self.predict(X)
         y = np.argmax(y, axis=1)
         labels = np.argmax(labels, axis=1)
-
+        print("predict: ", y)
+        print("labels: ", labels)
         accuracy = np.sum(y == labels) / float(X.shape[0])
         return accuracy
