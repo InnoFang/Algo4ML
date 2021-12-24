@@ -10,7 +10,8 @@
  + [x] CART
  + [x] K-means
  + [x] PCA 
- 
+ + [ ] Apriori
+
 # Reference
 
  + Machine Leanrning in Action 
