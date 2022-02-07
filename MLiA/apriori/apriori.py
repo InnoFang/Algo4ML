@@ -124,6 +124,6 @@ def generate_rules(L, support_data, min_conf=0.7):
             if i > 1:
                 rules_from_conseq(freq_set, H1, support_data, big_rule_list, min_conf)
             else:
-                calc_conf((freq_set, H1, support_data, big_rule_list, min_conf))
+                calc_conf(freq_set, H1, support_data, big_rule_list, min_conf)
     return big_rule_list
 
