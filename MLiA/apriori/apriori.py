@@ -92,3 +92,38 @@ def apriori(dataset, min_support=0.5):
         num_item += 1
     return l, support_data
 
+
+# calculate confidence
+def calc_conf(freq_set, H, support_data, brl, min_conf=0.7):
+    pruned_H = []
+    for conseq in H:
+        conf = support_data[freq_set] / support_data[freq_set - conseq]
+        if conf >= min_conf:
+            print(freq_set - conseq, '-->', conseq, 'conf:', conf)
+            brl.append((freq_set - conseq, conseq, conf))
+            pruned_H.append(conseq)
+    return pruned_H
+
+
+def rules_from_conseq(freq_set, H, support_data, brl, min_conf=0.7):
+    m = len(H[0])
+    if len(freq_set) > (m + 1):
+        Hmp1 = apriori_gen(H, m + 1)
+        Hmp1 = calc_conf(freq_set, Hmp1, support_data, brl, min_conf)
+        print('Hmp1=', Hmp1)
+        print('len(Hmp1)=', len(Hmp1), 'len(freq_set)=', len(freq_set))
+        if len(Hmp1) > 1:
+            rules_from_conseq(freq_set, Hmp1, support_data, brl, min_conf)
+
+
+def generate_rules(L, support_data, min_conf=0.7):
+    big_rule_list = []
+    for i in range(1, len(L)):
+        for freq_set in L[i]:
+            H1 = [frozenset([item]) for item in freq_set]
+            if i > 1:
+                rules_from_conseq(freq_set, H1, support_data, big_rule_list, min_conf)
+            else:
+                calc_conf((freq_set, H1, support_data, big_rule_list, min_conf))
+    return big_rule_list
+
