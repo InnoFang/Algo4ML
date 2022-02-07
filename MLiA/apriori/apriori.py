@@ -4,7 +4,7 @@ import numpy as np
 
 
 def load_dataset():
-    return [[1, 3, 4], [2, 3, 5], [1, 2, 3, 5, [2, 5]]]
+    return [[1, 3, 4], [2, 3, 5], [1, 2, 3, 5], [2, 5]]
 
 
 # create a collection c1, de-duplicate the dataset, sort it, and
@@ -14,12 +14,12 @@ def create_collection(dataset):
     for txn in dataset:
         for item in txn:
             # de-duplicate it
-            if [item] not in coll:
+            if not [item] in coll:
                 coll.append([item])
     # sort it
     coll.sort()
     # the elements of frozenset are stable, they can be as the key of dictionary
-    return map(frozenset, coll)
+    return list(map(frozenset, coll))
 
 
 # calculate the support of candidate set `candidates` in dataset `dataset`,
@@ -29,7 +29,7 @@ def scan_data(dataset, candidates, min_support):
     ss_cnt = {}
     for tid in dataset:
         for cand in candidates:
-            # check if all elements of `cand` is in the `tid`
+            # check if all elements of `cand` are in the `tid`
             if cand.issubset(tid):
                 if cand not in ss_cnt:
                     ss_cnt[cand] = 1
