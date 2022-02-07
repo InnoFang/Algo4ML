@@ -10,7 +10,7 @@
  + [x] CART
  + [x] K-means
  + [x] PCA 
- + [ ] Apriori
+ + [x] Apriori
 
 # Reference
 
