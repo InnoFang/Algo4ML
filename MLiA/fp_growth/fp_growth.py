@@ -88,6 +88,30 @@ def find_prefix_path(base_path, tree_node):
     return cond_patt
 
 
+def mine_tree(tree, header_table, min_support, prefix, freq_item_list):
+    bigL = [v[0] for v in sorted(header_table.items(), key=lambda p: p[1][0])]
+    print('-----', sorted(header_table.items(), key=lambda p: p[1][0]))
+    print('bigL=', bigL)
+    for base_patt in bigL:
+        new_freq_set = prefix.copy()
+        new_freq_set.add(base_patt)
+        print('new_freq_set=', new_freq_set, prefix)
+
+        freq_item_list.append(new_freq_set)
+        print('freq_item_list=', freq_item_list)
+        cond_patt_base = find_prefix_path(base_patt, header_table[base_patt][1])
+        print('cond_patt_base=', base_patt, cond_patt_base)
+
+        # build FP-tree
+        cond_tree, head = create_tree(cond_patt_base, min_support)
+        print("head=", head)
+        if head is not None:
+            cond_tree.disp(1)
+            print('\n\n\n')
+            mine_tree(cond_tree, head, min_support, new_freq_set, freq_item_list)
+        print('\n\n\n')
+
+
 def load_simple_data():
     simp_data = [['r', 'z', 'h', 'j', 'p'],
                  ['z', 'y', 'x', 'w', 'v', 'u', 't', 's'],
