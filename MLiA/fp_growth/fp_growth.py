@@ -71,6 +71,23 @@ def update_header(node_to_test, target_node):
     node_to_test.node_link = target_node
 
 
+def ascend_tree(leaf_node, prefix_path):
+    if leaf_node.parent is not None:
+        prefix_path.append(leaf_node.name)
+        ascend_tree(leaf_node.parent, prefix_path)
+
+
+def find_prefix_path(base_path, tree_node):
+    cond_patt = {}
+    while tree_node is not None:
+        prefix_path = []
+        ascend_tree(tree_node, prefix_path)
+        if len(prefix_path) > 1:
+            cond_patt[frozenset(prefix_path[1:])] = tree_node.count
+        tree_node = tree_node.node_link
+    return cond_patt
+
+
 def load_simple_data():
     simp_data = [['r', 'z', 'h', 'j', 'p'],
                  ['z', 'y', 'x', 'w', 'v', 'u', 't', 's'],
