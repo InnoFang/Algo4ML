@@ -16,3 +16,11 @@ class TestFPGrowth(unittest.TestCase):
         init_set = fp_growth.create_init_set(simple_data)
         fp_tree, header_tab = fp_growth.create_tree(init_set, 3)
         fp_tree.disp()
+
+    def test_find_prefix_paths(self):
+        simple_data = fp_growth.load_simple_data()
+        init_set = fp_growth.create_init_set(simple_data)
+        fp_tree, header_tab = fp_growth.create_tree(init_set, 3)
+        print(fp_growth.find_prefix_path('x', header_tab['x'][1]))
+        print(fp_growth.find_prefix_path('z', header_tab['z'][1]))
+        print(fp_growth.find_prefix_path('r', header_tab['r'][1]))
