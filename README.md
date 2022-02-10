@@ -11,6 +11,7 @@
  + [x] K-means
  + [x] PCA 
  + [x] Apriori
+ + [x] FP-growth
 
 # Reference
 
