@@ -20,3 +20,4 @@
  + [leanrn_dl](https://github.com/hanbt/learn_dl)  
  + [MachineLearning](https://github.com/apachecn/MachineLearning)  
  + [Play-with-Machine-Learning-Algorithms](https://github.com/liuyubobobo/Play-with-Machine-Learning-Algorithms)
+ + [micrograd](https://github.com/karpathy/micrograd)
